@@ -11,6 +11,21 @@ export function initAboutGallery() {
   const dotsContainer = gallery.querySelector('.about-gallery-dots');
   let index = 0;
 
+  function preload(i) {
+    if (i < 0 || i >= slides.length) return;
+    const src = slides[i] && slides[i].getAttribute('src');
+    if (!src) return;
+    const img = new Image();
+    img.decoding = 'async';
+    img.src = src;
+  }
+
+  function preloadNeighbors() {
+    preload(index);
+    preload(index - 1);
+    preload(index + 1);
+  }
+
   if (dotsContainer) {
     dotsContainer.innerHTML = '';
     slides.forEach((_, i) => {
@@ -32,6 +47,7 @@ export function initAboutGallery() {
         d.classList.toggle('active', i === index);
       });
     }
+    preloadNeighbors();
   }
 
   function goTo(i) {
@@ -58,6 +74,7 @@ export function initAboutGallery() {
               d.classList.toggle('active', i === index);
             });
           }
+          preloadNeighbors();
         }
       });
     },
@@ -70,5 +87,6 @@ export function initAboutGallery() {
     if (w) track.scrollTo({ left: index * w, behavior: 'auto' });
   });
 
+  preloadNeighbors();
   update();
 }
