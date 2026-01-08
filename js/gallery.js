@@ -44,6 +44,7 @@ export function initAboutGallery() {
   const SWIPE_MAX_OFF_AXIS = 70;
   let startX = 0;
   let startY = 0;
+  let isTouchSwiping = false;
   let isDown = false;
   let activePointerId = null;
   let lastSwipeAt = 0;
@@ -103,14 +104,34 @@ export function initAboutGallery() {
       const t = e.touches[0];
       startX = t.clientX;
       startY = t.clientY;
+      isTouchSwiping = false;
     }, { passive: true });
+
+    track.addEventListener('touchmove', (e) => {
+      if (!e.touches || e.touches.length !== 1) return;
+      const t = e.touches[0];
+      const dx = t.clientX - startX;
+      const dy = t.clientY - startY;
+
+      // When the user is clearly swiping horizontally, prevent the page from scrolling.
+      // This avoids iOS Safari getting "stuck" after the first swipe.
+      if (Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) {
+        isTouchSwiping = true;
+        e.preventDefault();
+      }
+    }, { passive: false });
 
     track.addEventListener('touchend', (e) => {
       const t = e.changedTouches && e.changedTouches[0];
       if (!t) return;
       const dx = t.clientX - startX;
       const dy = t.clientY - startY;
-      finishSwipe(dx, dy);
+      if (isTouchSwiping) finishSwipe(dx, dy);
+      isTouchSwiping = false;
+    }, { passive: true });
+
+    track.addEventListener('touchcancel', () => {
+      isTouchSwiping = false;
     }, { passive: true });
   }
 
