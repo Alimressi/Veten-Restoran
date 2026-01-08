@@ -603,6 +603,25 @@ section h2::after {
     font-size: 1rem;
     font-family: inherit;
     outline: none;
+    text-align: left;
+}
+
+.reservation-field select,
+.reservation-field input[type="date"] {
+    text-align: left;
+}
+
+/* iOS Safari renders date value via internal pseudo-elements; force left alignment */
+.reservation-field input[type="date"]::-webkit-date-and-time-value {
+    text-align: left;
+}
+
+.reservation-field input[type="date"]::-webkit-datetime-edit {
+    text-align: left;
+}
+
+.reservation-field input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+    text-align: left;
 }
 
 .reservation-field textarea { resize: vertical; min-height: 110px; }
@@ -931,12 +950,42 @@ section h2::after {
     }
 
     .reservation-modal-content {
-        margin: 92px auto 24px;
+        margin: calc(92px + env(safe-area-inset-top)) auto 24px;
         padding: 18px;
-        max-height: calc(100vh - 120px);
+        max-height: calc(100dvh - 120px - env(safe-area-inset-top));
+        padding-bottom: calc(18px + env(safe-area-inset-bottom));
     }
     .reservation-grid { grid-template-columns: 1fr; }
     .reservation-actions .btn { width: 100%; }
+
+    .hero {
+        height: 100dvh;
+        position: relative;
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    .hero::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 90px;
+        background: linear-gradient(to bottom, rgba(244, 244, 244, 0), var(--light-color));
+        pointer-events: none;
+    }
+
+    .hero-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero .btn {
+        width: auto;
+        max-width: 320px;
+    }
 }
 
 @media (max-width: 576px) {

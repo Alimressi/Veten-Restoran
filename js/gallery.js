@@ -50,6 +50,9 @@ export function initAboutGallery() {
   track.style.cursor = 'grab';
   try { track.style.touchAction = 'pan-y'; } catch (_) {}
 
+  const isTouchDevice = 'ontouchstart' in window || (navigator && navigator.maxTouchPoints > 0);
+  const useTouchSwipe = isTouchDevice;
+
   function finishSwipe(dx, dy) {
     const now = Date.now();
     if (now - lastSwipeAt < 250) return;
@@ -59,34 +62,42 @@ export function initAboutGallery() {
     dx > 0 ? goTo(index - 1) : goTo(index + 1);
   }
 
-  track.addEventListener('pointerdown', (e) => {
-    isDown = true;
-    activePointerId = e.pointerId;
-    startX = e.clientX;
-    startY = e.clientY;
-    try { track.setPointerCapture(e.pointerId); } catch (_) {}
-    track.style.cursor = 'grabbing';
-  });
+  if (!useTouchSwipe) {
+    track.addEventListener('pointerdown', (e) => {
+      isDown = true;
+      activePointerId = e.pointerId;
+      startX = e.clientX;
+      startY = e.clientY;
+      try { track.setPointerCapture(e.pointerId); } catch (_) {}
+      track.style.cursor = 'grabbing';
+    });
 
-  track.addEventListener('pointerup', (e) => {
-    if (!isDown) return;
-    if (activePointerId !== null && e.pointerId !== activePointerId) return;
-    const dx = e.clientX - startX;
-    const dy = e.clientY - startY;
-    finishSwipe(dx, dy);
-    isDown = false;
-    activePointerId = null;
-    try { track.releasePointerCapture(e.pointerId); } catch (_) {}
-    track.style.cursor = 'grab';
-  });
+    track.addEventListener('pointerup', (e) => {
+      if (!isDown) return;
+      if (activePointerId !== null && e.pointerId !== activePointerId) return;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      finishSwipe(dx, dy);
+      isDown = false;
+      activePointerId = null;
+      try { track.releasePointerCapture(e.pointerId); } catch (_) {}
+      track.style.cursor = 'grab';
+    });
 
-  track.addEventListener('pointercancel', () => {
-    isDown = false;
-    activePointerId = null;
-    track.style.cursor = 'grab';
-  });
+    track.addEventListener('pointercancel', () => {
+      isDown = false;
+      activePointerId = null;
+      track.style.cursor = 'grab';
+    });
 
-  if (!('PointerEvent' in window)) {
+    track.addEventListener('lostpointercapture', () => {
+      isDown = false;
+      activePointerId = null;
+      track.style.cursor = 'grab';
+    });
+  }
+
+  if (useTouchSwipe) {
     track.addEventListener('touchstart', (e) => {
       if (!e.touches || e.touches.length !== 1) return;
       const t = e.touches[0];

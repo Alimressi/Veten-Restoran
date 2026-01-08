@@ -13,6 +13,7 @@ export function initReservation() {
   const modal = document.getElementById('reservation-modal');
   const openBtn = document.getElementById('open-reservation');
   const form = document.getElementById('reservation-form');
+  const modalContent = modal ? modal.querySelector('.reservation-modal-content') : null;
   const timeSelect = document.getElementById('reservation-time');
   const dateInput = document.getElementById('reservation-date');
   const phoneInput = form ? form.querySelector('input[name="phone"]') : null;
@@ -41,6 +42,19 @@ export function initReservation() {
     notice.textContent = String(text);
     notice.classList.add('show');
     if (type) notice.classList.add(type);
+
+    const scrollToTop = () => {
+      if (!modalContent) return;
+      try {
+        modalContent.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch (_) {
+        modalContent.scrollTop = 0;
+      }
+    };
+
+    // Ensure user sees the confirmation on mobile (iOS address bar / safe-area can hide submit button)
+    scrollToTop();
+    requestAnimationFrame(scrollToTop);
   }
 
   function openModal() {
