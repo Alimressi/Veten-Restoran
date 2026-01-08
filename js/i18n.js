@@ -31,7 +31,7 @@ export const i18n = {
     reserve_branch: 'Филиал',
     reserve_date: 'Дата',
     reserve_time: 'Время',
-    reserve_guests: 'Гостей',
+    reserve_guests: 'Число гостей',
     reserve_phone: 'Телефон',
     reserve_phone_placeholder: '+994...',
     reserve_phone_invalid: 'Введите корректный номер телефона',

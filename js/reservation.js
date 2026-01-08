@@ -17,6 +17,7 @@ export function initReservation() {
   const timeSelect = document.getElementById('reservation-time');
   const dateInput = document.getElementById('reservation-date');
   const phoneInput = form ? form.querySelector('input[name="phone"]') : null;
+  const guestsInput = form ? form.querySelector('input[name="guests"]') : null;
   const notice = form ? form.querySelector('.reservation-notice') : null;
 
   if (dateInput) {
@@ -75,6 +76,13 @@ export function initReservation() {
         .replace(/(?!^)\+/g, '')
         .replace(/^\+{2,}/, '+');
       if (normalized !== phoneInput.value) phoneInput.value = normalized;
+    });
+  }
+
+  if (guestsInput) {
+    guestsInput.addEventListener('input', () => {
+      const digitsOnly = String(guestsInput.value || '').replace(/\D/g, '');
+      if (digitsOnly !== guestsInput.value) guestsInput.value = digitsOnly;
     });
   }
 
