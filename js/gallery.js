@@ -126,7 +126,7 @@ export function initAboutGallery() {
       if (!t) return;
       const dx = t.clientX - startX;
       const dy = t.clientY - startY;
-      if (isTouchSwiping) finishSwipe(dx, dy);
+      finishSwipe(dx, dy);
       isTouchSwiping = false;
     }, { passive: true });
 
