@@ -960,14 +960,14 @@ section h2::after {
     .reservation-modal-content {
         margin: calc(92px + env(safe-area-inset-top)) auto 24px;
         padding: 18px;
-        max-height: calc(100dvh - 120px - env(safe-area-inset-top));
+        max-height: calc(100svh - 120px - env(safe-area-inset-top));
         padding-bottom: calc(18px + env(safe-area-inset-bottom));
     }
     .reservation-grid { grid-template-columns: 1fr; }
     .reservation-actions .btn { width: 100%; }
 
     .hero {
-        height: 100dvh;
+        height: 100svh;
         position: relative;
         padding-top: env(safe-area-inset-top);
         padding-bottom: env(safe-area-inset-bottom);
