@@ -1,0 +1,982 @@
+/* Base Styles */
+:root {
+    --primary-color: #d4a76a;
+    --secondary-color: #8b0000;
+    --dark-color: #333;
+    --light-color: #f4f4f4;
+    --text-color: #333;
+    --text-light: #777;
+    --transition: all 0.3s ease;
+}
+
+/* (Removed) Section Modal styles */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    overflow-x: hidden;
+}
+
+/* Reveal-on-scroll base */
+.reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    will-change: opacity, transform;
+}
+
+.reveal.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Optional variants */
+.reveal.fade-in { transform: none; }
+.reveal.fade-left { transform: translateX(-24px); }
+.reveal.fade-right { transform: translateX(24px); }
+.reveal.fade-left.in-view,
+.reveal.fade-right.in-view { transform: translateX(0); }
+
+/* Simple stagger helper: children get increasing delay */
+.stagger > .reveal { transition-delay: calc(var(--stagger-step, 80ms) * var(--i, 0)); }
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+a {
+    text-decoration: none;
+    color: var(--text-color);
+    transition: var(--transition);
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.btn {
+    display: inline-block;
+    background: var(--primary-color);
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: var(--transition);
+    text-align: center;
+}
+
+.btn:hover {
+    background: var(--secondary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+section {
+    padding: 80px 0;
+}
+
+section h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: var(--primary-color);
+}
+
+/* Header & Navigation */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: var(--transition);
+}
+
+.header.scrolled {
+    background: rgba(255, 255, 255, 0.98);
+    padding: 10px 0;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+}
+
+/* (Removed) Mega Menu styles */
+
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+/* Language Switcher */
+.lang-switch {
+    display: flex;
+    gap: 8px;
+    margin-left: 20px;
+}
+
+.desktop-only { display: flex; }
+.mobile-only { display: none; }
+
+.lang-btn {
+    padding: 6px 10px;
+    border: 1px solid var(--primary-color);
+    background: white;
+    color: var(--primary-color);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: var(--transition);
+}
+
+.lang-btn.active,
+.lang-btn:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+.nav-links a {
+    font-weight: 500;
+    position: relative;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background: var(--primary-color);
+    transition: var(--transition);
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+    width: 100%;
+}
+
+.burger {
+    display: none;
+    cursor: pointer;
+}
+
+.burger div {
+    width: 25px;
+    height: 3px;
+    background: var(--dark-color);
+    margin: 5px;
+    transition: var(--transition);
+}
+
+.nav-overlay {
+    display: none;
+}
+
+/* Hero Section */
+.hero {
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('assets/hero.jpg') no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: white;
+    padding: 0 20px;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero h1 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    animation: fadeInDown 1s ease;
+}
+
+.hero p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    animation: fadeInUp 1s ease 0.3s;
+    animation-fill-mode: both;
+}
+
+.hero .btn {
+    animation: fadeIn 1s ease 0.6s;
+    animation-fill-mode: both;
+}
+
+/* About Section */
+.about {
+    background: var(--light-color);
+}
+
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+}
+
+.about-text h2 {
+    text-align: left;
+}
+
+.about-text h2::after {
+    left: 0;
+    transform: none;
+}
+
+.about-text p {
+    margin-bottom: 20px;
+    color: var(--text-light);
+}
+
+/* About Gallery Slider */
+.about-gallery {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    height: 360px;
+    background: #fff;
+}
+
+.about-gallery-track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease;
+}
+
+.about-gallery-track img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    flex: 0 0 100%;
+}
+
+.about-gallery-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.85);
+    color: var(--dark-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: var(--transition);
+    z-index: 3;
+    pointer-events: auto;
+}
+
+.about-gallery-nav:hover {
+    background: white;
+    transform: translateY(-50%) scale(1.05);
+}
+
+.about-gallery-nav.prev { left: 12px; }
+.about-gallery-nav.next { right: 12px; }
+
+.about-gallery-dots {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 1;
+}
+
+.about-gallery-dots button {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.7);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    cursor: pointer;
+}
+
+.about-gallery-dots button.active {
+    background: var(--primary-color);
+}
+
+/* Menu Section */
+.menu {
+    background: white;
+}
+
+/* Menu intro (button centered) */
+.menu-intro {
+    display: flex;
+    justify-content: center;
+}
+
+/* Full Menu Modal */
+.menu-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    z-index: 2000;
+    pointer-events: none; /* Let page scroll while modal open */
+}
+
+.menu-modal.open { display: block; }
+
+.menu-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(2px);
+    pointer-events: none; /* allow background page to scroll */
+}
+
+.menu-modal-content {
+    position: relative;
+    max-width: 960px;
+    width: calc(100% - 40px);
+    margin: 40px auto;
+    background: #111;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    z-index: 1;
+    pointer-events: auto; /* keep modal controls clickable */
+}
+
+.menu-modal-stage {
+    position: relative;
+    background: #000;
+    height: min(80vh, 720px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-modal-stage img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.menu-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 3;
+    pointer-events: auto;
+}
+
+.menu-modal-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.15);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+    z-index: 2;
+}
+
+.menu-modal-nav:hover { background: rgba(255,255,255,0.25); }
+.menu-modal-nav.prev { left: 10px; }
+.menu-modal-nav.next { right: 10px; }
+
+.menu-modal-dots {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    padding: 12px 0;
+    background: #111;
+}
+
+.menu-modal-dots button {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: none;
+    background: #333;
+    cursor: pointer;
+}
+
+.menu-modal-dots button.active { background: var(--primary-color); }
+
+.menu-modal-actions {
+    display: flex;
+    justify-content: center;
+    padding: 8px 0 16px;
+    background: #111;
+}
+
+.menu-download {
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 8px 14px;
+    border-radius: 8px;
+}
+
+/* Reservation Modal */
+.reservation-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    z-index: 2500;
+}
+
+.reservation-modal.open { display: block; }
+
+.reservation-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(2px);
+}
+
+.reservation-modal-content {
+    position: relative;
+    max-width: 760px;
+    width: calc(100% - 32px);
+    margin: 110px auto 40px;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    padding: 22px;
+    max-height: calc(100vh - 150px);
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.reservation-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0,0,0,0.06);
+    color: var(--dark-color);
+    font-size: 26px;
+    cursor: pointer;
+}
+
+.reservation-title {
+    margin-bottom: 14px;
+    text-align: left;
+}
+
+.reservation-title::after { display: none; }
+
+.reservation-form { display: grid; gap: 14px; }
+
+.reservation-notice {
+    display: none;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    font-weight: 500;
+    line-height: 1.35;
+}
+
+.reservation-notice.show { display: block; }
+
+.reservation-notice.success {
+    background: rgba(46, 204, 113, 0.10);
+    border-color: rgba(46, 204, 113, 0.25);
+    color: #1f7a3a;
+}
+
+.reservation-notice.error {
+    background: rgba(231, 76, 60, 0.10);
+    border-color: rgba(231, 76, 60, 0.25);
+    color: #8a1f14;
+}
+
+.reservation-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.reservation-field {
+    display: grid;
+    gap: 8px;
+    color: var(--dark-color);
+    font-weight: 500;
+}
+
+.reservation-field span { font-weight: 500; }
+
+.reservation-field input,
+.reservation-field select,
+.reservation-field textarea {
+    width: 100%;
+    padding: 12px 12px;
+    border: 1px solid #e6e6e6;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: inherit;
+    outline: none;
+}
+
+.reservation-field textarea { resize: vertical; min-height: 110px; }
+
+.reservation-field input:focus,
+.reservation-field select:focus,
+.reservation-field textarea:focus {
+    border-color: rgba(212, 167, 106, 0.75);
+    box-shadow: 0 0 0 3px rgba(212, 167, 106, 0.18);
+}
+
+.reservation-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-spinner {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid rgba(0,0,0,0.2);
+    border-top-color: var(--primary-color);
+    animation: spin 0.8s linear infinite;
+    display: none;
+}
+
+.btn-spinner.active { display: inline-block; }
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Gallery Section removed */
+/* Reservation Section removed */
+
+/* Contact Section */
+.contact-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+    justify-items: center; /* center content in grid cells */
+}
+
+.contact-info { text-align: center; }
+.contact-info h2 { text-align: center; }
+
+.contact-info h2::after {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.contact-info p {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* center address and phone rows */
+}
+
+.contact-info i {
+    margin-right: 15px;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    width: 25px;
+    text-align: center;
+}
+
+/* Branch tiles */
+.branches {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(220px, 1fr));
+    gap: 20px;
+    align-items: stretch;
+}
+
+.branch-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 14px;
+    padding: 18px;
+    text-align: left;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+.branch-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px rgba(0,0,0,0.1);
+    border-color: #e6e6e6;
+}
+
+.branch-card h3 {
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 10px;
+    color: var(--dark-color);
+    text-align: center;
+}
+
+.branch-card p {
+    margin-bottom: 10px;
+    justify-content: flex-start;
+}
+
+.branch-card i { color: var(--primary-color); }
+
+.branch-card .social-links {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+    justify-content: center;
+}
+
+.branch-card .instagram-btn { padding: 6px 10px; box-shadow: none; }
+.branch-card .instagram-btn i { font-size: 16px; }
+.branch-card .instagram-btn span { font-size: 0.9rem; }
+.branch-card .instagram-btn:hover { transform: translateY(-1px); }
+.branch-card .btn { padding: 8px 12px; border-radius: 8px; text-transform: none; letter-spacing: 0; }
+
+/* Phone link look */
+.branch-card p a { color: inherit; text-decoration: none; }
+.branch-card p a:hover { text-decoration: underline; }
+
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+    justify-content: center; /* center social section */
+}
+
+/* Redesigned Instagram button */
+.social-links .instagram-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.04);
+    color: var(--primary-color);
+    font-weight: 500;
+    box-shadow: none;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    white-space: nowrap;
+    transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+.social-links .instagram-btn i { font-size: 16px; margin: 0; line-height: 1; }
+.social-links .instagram-btn span { margin: 0; padding: 0; line-height: 1; }
+.social-links .instagram-btn:hover {
+    transform: translateY(-1px);
+    background: rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.14);
+}
+
+.social-links a:not(.instagram-btn):hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-3px);
+}
+
+.map {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.map iframe {
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+    border: none;
+}
+
+/* Footer */
+.footer {
+    background: var(--dark-color);
+    color: white;
+    text-align: center;
+    padding: 30px 0;
+}
+
+.footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.footer p {
+    margin-bottom: 10px;
+    color: #aaa;
+}
+
+.footer i {
+    color: #ff6b6b;
+    margin: 0 5px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .about-content,
+    .contact-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    .about-gallery { height: 300px; }
+    .branches { grid-template-columns: repeat(2, minmax(220px, 1fr)); }
+    
+    .about-text h2,
+    .contact-info h2 {
+        text-align: center;
+    }
+    
+    .about-text h2::after,
+    .contact-info h2::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .reservation-form {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        position: fixed;
+        top: 80px;
+        right: -100%;
+        width: 60%;
+        height: calc(100vh - 80px);
+        background: white;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition);
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .nav-links.active {
+        right: 0;
+    }
+
+    .nav-overlay {
+        position: fixed;
+        top: 80px;
+        left: 0;
+        width: 40%;
+        height: calc(100vh - 80px);
+        background: transparent;
+        display: none;
+        z-index: 999;
+    }
+
+    .nav-overlay.active { display: block; }
+    
+    .burger {
+        display: block;
+    }
+
+    .desktop-only { display: none; }
+    .mobile-only { display: flex; }
+
+    .nav-links .nav-lang { margin-top: 18px; }
+    .nav-links .nav-lang .lang-switch {
+        margin-left: 0;
+        justify-content: center;
+        background: rgba(244, 244, 244, 0.9);
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .nav-links .nav-lang .lang-btn { padding: 10px 12px; min-height: 44px; }
+    
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero p {
+        font-size: 1.2rem;
+    }
+    .hero { height: 75vh; }
+    
+    section {
+        padding: 60px 0;
+    }
+    .about-gallery { height: 260px; }
+    
+    section h2 {
+        font-size: 2rem;
+        margin-bottom: 40px;
+    }
+
+    .reservation-modal-content {
+        margin: 92px auto 24px;
+        padding: 18px;
+        max-height: calc(100vh - 120px);
+    }
+    .reservation-grid { grid-template-columns: 1fr; }
+    .reservation-actions .btn { width: 100%; }
+}
+
+@media (max-width: 576px) {
+    .menu-items {
+        grid-template-columns: 1fr;
+    }
+    
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .hero p {
+        font-size: 1rem;
+    }
+    
+    .btn {
+        padding: 12px 24px;
+        font-size: 0.95rem;
+        width: 100%;
+    }
+    .about-gallery { height: 220px; }
+    .branches { grid-template-columns: 1fr; gap: 16px; }
+    .branch-card { padding: 16px; }
+    .branch-card .social-links { flex-direction: column; }
+    .branch-card .social-links a { width: 100%; text-align: center; }
+}
+
+/* Extra small phones optimizations */
+@media (max-width: 480px) {
+    .container { padding: 0 16px; }
+    section { padding: 48px 0; }
+    .hero h1 { font-size: 1.8rem; }
+    .hero p { font-size: 0.95rem; }
+    .about-gallery { height: 200px; }
+    .branches { gap: 12px; }
+    .branch-card { padding: 16px; }
+    .menu-intro .btn { width: 100%; max-width: 320px; }
+    .social-links .instagram-btn { width: 100%; justify-content: center; }
+}

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vətən Restoran — Национальная кухня Азербайджана</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo" data-i18n="brand">Vətən Restoran</div>
+            <ul class="nav-links">
+                <li><a href="#home" data-i18n="nav_home">Главная</a></li>
+                <li><a href="#about" data-i18n="nav_about">О нас</a></li>
+                <li><a href="#menu" data-i18n="nav_menu">Меню</a></li>
+                <li><a href="#contact" data-i18n="nav_contacts">Контакты</a></li>
+                <li class="nav-lang">
+                    <div class="lang-switch mobile-only" aria-label="Language switcher">
+                        <button class="lang-btn" data-lang="az" aria-label="Azərbaycan">AZ</button>
+                        <button class="lang-btn" data-lang="en" aria-label="English">EN</button>
+                        <button class="lang-btn" data-lang="ru" aria-label="Русский">RU</button>
+                    </div>
+                </li>
+            </ul>
+            <div class="lang-switch desktop-only" aria-label="Language switcher">
+                <button class="lang-btn" data-lang="az" aria-label="Azərbaycan">AZ</button>
+                <button class="lang-btn" data-lang="en" aria-label="English">EN</button>
+                <button class="lang-btn" data-lang="ru" aria-label="Русский">RU</button>
+            </div>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+    <div class="nav-overlay" aria-hidden="true"></div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 data-i18n="hero_title">Добро пожаловать в Vətən Restoran</h1>
+            <p data-i18n="hero_subtitle">Настоящая азербайджанская кухня и тёплое гостеприимство</p>
+            <button class="btn" type="button" id="open-reservation" data-i18n="reserve_open_btn">Забронировать столик</button>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 data-i18n="about_title">О ресторане</h2>
+                    <p data-i18n="about_p1">Ресторан «Vətən» — семейное заведение с настоящей азербайджанской кухней. Здесь традиционные рецепты готовятся с заботой и уважением к культуре, а блюда создаются только из свежих местных продуктов. В меню — сочные шашлыки, ароматный плов, нежная долма и домашние сладости, которые передают вкус Азербайджана в каждой ложке.</p>
+                    <p data-i18n="about_p2">Интерьер ресторана тёплый и уютный, создающий атмосферу настоящего дома. Дружелюбное обслуживание и внимание к деталям делают каждый визит особенным, а время, проведённое здесь, запоминается своей комфортной и душевной атмосферой.</p>
+                </div>
+                <div class="about-gallery" aria-label="About photo gallery">
+                    <div class="about-gallery-track">
+                        <img src="assets/about/int1.jpg" alt="Vətən — интерьер 1" loading="lazy">
+                        <img src="assets/about/int2.jpg" alt="Vətən — интерьер 2" loading="lazy">
+                        <img src="assets/about/int3.jpg" alt="Vətən — интерьер 3" loading="lazy">
+                        <img src="assets/about/about1.jpg" alt="Vətən — фасад ресторана" loading="lazy">
+                        <img src="assets/about/about2.jpg" alt="Vətən — внутренний двор" loading="lazy">
+                        <img src="assets/about/about3.jpg" alt="Vətən — панорамный вид ресторана" loading="lazy">
+                        <img src="assets/about/about4.jpg" alt="Vətən — терраса и залы" loading="lazy">
+                    </div>
+                    <button class="about-gallery-nav prev" aria-label="Предыдущее фото"><i class="fas fa-chevron-left"></i></button>
+                    <button class="about-gallery-nav next" aria-label="Следующее фото"><i class="fas fa-chevron-right"></i></button>
+                    <div class="about-gallery-dots" aria-label="Навигация по фото"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="menu">
+        <div class="container">
+            <h2 data-i18n="menu_title">Наше меню</h2>
+            <div class="branches menu-branches">
+                <div class="branch-card">
+                    <h3>Mərkəzi <span data-i18n="branch_suffix">филиал</span></h3>
+                    <div class="social-links" style="margin-top: 8px;">
+                        <a class="btn" href="assets/menu/menu.pdf" target="_blank" rel="noopener" data-i18n="menu_view_btn">Посмотреть меню</a>
+                    </div>
+                </div>
+                <div class="branch-card">
+                    <h3>Mərdəkan <span data-i18n="branch_suffix">филиал</span></h3>
+                    <div class="social-links" style="margin-top: 8px;">
+                        <a class="btn" href="assets/menu/menu.pdf" target="_blank" rel="noopener" data-i18n="menu_view_btn">Посмотреть меню</a>
+                    </div>
+                </div>
+                <div class="branch-card">
+                    <h3>Dəniz Mall <span data-i18n="branch_suffix">филиал</span></h3>
+                    <div class="social-links" style="margin-top: 8px;">
+                        <a class="btn" href="assets/menu/menu_deniz.pdf" target="_blank" rel="noopener" data-i18n="menu_view_btn">Посмотреть меню</a>
+                    </div>
+                </div>
+                <div class="branch-card">
+                    <h3>Sea Breeze <span data-i18n="branch_suffix">филиал</span></h3>
+                    <div class="social-links" style="margin-top: 8px;">
+                        <a class="btn" href="assets/menu/menu_sea.pdf" target="_blank" rel="noopener" data-i18n="menu_view_btn">Посмотреть меню</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="reservation-modal" id="reservation-modal" aria-hidden="true">
+        <div class="reservation-modal-backdrop" data-close-modal="true"></div>
+        <div class="reservation-modal-content" role="dialog" aria-modal="true" aria-label="Reservation">
+            <button class="reservation-modal-close" type="button" aria-label="Close" data-close-modal="true">×</button>
+            <h2 class="reservation-title" data-i18n="reserve_title">Бронирование столика</h2>
+            <form id="reservation-form" class="reservation-form">
+                <input type="text" name="website" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;" />
+                <div class="reservation-notice" role="status" aria-live="polite" aria-atomic="true"></div>
+                <div class="reservation-grid">
+                    <label class="reservation-field">
+                        <span data-i18n="reserve_branch">Филиал</span>
+                        <select name="branch" id="reservation-branch" required>
+                            <option value="Mərkəzi">Mərkəzi</option>
+                            <option value="Mərdəkan">Mərdəkan</option>
+                            <option value="Dəniz Mall">Dəniz Mall</option>
+                            <option value="Sea Breeze">Sea Breeze</option>
+                        </select>
+                    </label>
+
+                    <label class="reservation-field">
+                        <span data-i18n="reserve_date">Дата</span>
+                        <input type="date" name="date" id="reservation-date" required />
+                    </label>
+
+                    <label class="reservation-field">
+                        <span data-i18n="reserve_time">Время</span>
+                        <select name="time" id="reservation-time" required></select>
+                    </label>
+
+                    <label class="reservation-field">
+                        <span data-i18n="reserve_guests">Гостей</span>
+                        <input type="number" name="guests" min="1" max="50" required />
+                    </label>
+                </div>
+
+                <div class="reservation-grid">
+                    <label class="reservation-field">
+                        <span data-i18n="reserve_phone">Телефон</span>
+                        <input type="tel" name="phone" inputmode="tel" pattern="^\+?\d*$" required data-i18n-placeholder="reserve_phone_placeholder" placeholder="+994..." />
+                    </label>
+
+                    <label class="reservation-field">
+                        <span data-i18n="reserve_email">Email (опционально)</span>
+                        <input type="email" name="email" data-i18n-placeholder="reserve_email_placeholder" placeholder="name@example.com" />
+                    </label>
+                </div>
+
+                <label class="reservation-field">
+                    <span data-i18n="reserve_message">Сообщение</span>
+                    <textarea name="message" rows="4" data-i18n-placeholder="reserve_message_placeholder" placeholder="..."></textarea>
+                </label>
+
+                <div class="reservation-actions">
+                    <button class="btn" type="submit" data-i18n="reserve_submit">Отправить</button>
+                    <span class="btn-spinner" aria-hidden="true"></span>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-info" style="grid-column: 1 / -1;">
+                    <h2 data-i18n="contacts_title">Контакты</h2>
+                    <div class="branches">
+                        <div class="branch-card">
+                            <h3>Mərkəzi <span data-i18n="branch_suffix">филиал</span></h3>
+                            <p><i class="fas fa-map-marker-alt"></i> Tbilisi pr. 60, Баку</p>
+                            <p><i class="fas fa-phone"></i> <a href="tel:+994502021199">+994 (50) 202 11 99</a></p>
+                            <div class="social-links" style="margin-top: 8px;">
+                                <a class="instagram-btn" href="https://www.instagram.com/vetenrestoran/" target="_blank" rel="noopener" aria-label="Instagram Vətən Restoran">
+                                    <i class="fab fa-instagram" aria-hidden="true"></i>
+                                    <span>Instagram</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="branch-card">
+                            <h3>Mərdəkan <span data-i18n="branch_suffix">филиал</span></h3>
+                            <p><i class="fas fa-map-marker-alt"></i> Buzovna–Şüvəlan şossesi</p>
+                            <p><i class="fas fa-phone"></i> <a href="tel:+994504041199">+994 (50) 404 11 99</a></p>
+                            <div class="social-links" style="margin-top: 8px;">
+                                <a class="instagram-btn" href="https://www.instagram.com/vetenrestoran/" target="_blank" rel="noopener" aria-label="Instagram Vətən Restoran">
+                                    <i class="fab fa-instagram" aria-hidden="true"></i>
+                                    <span>Instagram</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="branch-card">
+                            <h3>Dəniz Mall <span data-i18n="branch_suffix">филиал</span></h3>
+                            <p><i class="fas fa-map-marker-alt"></i> Dəniz Mall TM, Баку</p>
+                            <p><i class="fas fa-phone"></i> <a href="tel:+994508041199">+994 (50) 804 11 99</a></p>
+                            <div class="social-links" style="margin-top: 8px;">
+                                <a class="instagram-btn" href="https://www.instagram.com/vetenboulevard/" target="_blank" rel="noopener" aria-label="Instagram Vətən Deniz Mall">
+                                    <i class="fab fa-instagram" aria-hidden="true"></i>
+                                    <span>Instagram</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="branch-card">
+                            <h3>Sea Breeze <span data-i18n="branch_suffix">филиал</span></h3>
+                            <p><i class="fas fa-map-marker-alt"></i> Sea Breeze</p>
+                            <p><i class="fas fa-phone"></i> <a href="tel:+994506021199">+994 (50) 602 11 99</a></p>
+                            <div class="social-links" style="margin-top: 8px;">
+                                <a class="instagram-btn" href="https://www.instagram.com/vetenseabreeze/" target="_blank" rel="noopener" aria-label="Instagram Vətən Sea Breeze">
+                                    <i class="fab fa-instagram" aria-hidden="true"></i>
+                                    <span>Instagram</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo" data-i18n="brand">Vətən</div>
+                <p>© 2025 Vətən Restoran. <span data-i18n="rights">Все права защищены.</span></p>
+                <p data-i18n="made_with_love">Сделано с <i class="fas fa-heart"></i> для ценителей азербайджанской кухни</p>
+            </div>
+        </div>
+    </footer>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
