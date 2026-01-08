@@ -119,7 +119,7 @@ export const i18n = {
     reserve_branch: 'Branch',
     reserve_date: 'Date',
     reserve_time: 'Time',
-    reserve_guests: 'Guests',
+    reserve_guests: 'Number of guests',
     reserve_phone: 'Phone',
     reserve_phone_placeholder: '+994...',
     reserve_phone_invalid: 'Enter a valid phone number',

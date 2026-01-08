@@ -3,8 +3,19 @@ export function initAboutGallery() {
   if (!gallery) return;
 
   const track = gallery.querySelector('.about-gallery-track');
-  const slides = Array.from(track ? track.querySelectorAll('img') : []);
-  if (!track || slides.length === 0) return;
+  const realSlides = Array.from(track ? track.querySelectorAll('img') : []);
+  if (!track || realSlides.length === 0) return;
+
+  // Infinite loop on touch devices via clones (works reliably with scroll-snap)
+  const firstClone = realSlides[0].cloneNode(true);
+  const lastClone = realSlides[realSlides.length - 1].cloneNode(true);
+  firstClone.setAttribute('aria-hidden', 'true');
+  lastClone.setAttribute('aria-hidden', 'true');
+  track.insertBefore(lastClone, track.firstChild);
+  track.appendChild(firstClone);
+
+  const totalReal = realSlides.length;
+  const totalAll = totalReal + 2;
 
   const prevBtn = gallery.querySelector('.about-gallery-nav.prev');
   const nextBtn = gallery.querySelector('.about-gallery-nav.next');
@@ -12,8 +23,8 @@ export function initAboutGallery() {
   let index = 0;
 
   function preload(i) {
-    if (i < 0 || i >= slides.length) return;
-    const src = slides[i] && slides[i].getAttribute('src');
+    if (i < 0 || i >= totalReal) return;
+    const src = realSlides[i] && realSlides[i].getAttribute('src');
     if (!src) return;
     const img = new Image();
     img.decoding = 'async';
@@ -28,7 +39,7 @@ export function initAboutGallery() {
 
   if (dotsContainer) {
     dotsContainer.innerHTML = '';
-    slides.forEach((_, i) => {
+    realSlides.forEach((_, i) => {
       const dot = document.createElement('button');
       if (i === 0) dot.classList.add('active');
       dot.setAttribute('aria-label', `Slide ${i + 1}`);
@@ -40,7 +51,7 @@ export function initAboutGallery() {
   function update() {
     const w = track.clientWidth || 0;
     if (w) {
-      track.scrollTo({ left: index * w, behavior: 'smooth' });
+      track.scrollTo({ left: (index + 1) * w, behavior: 'smooth' });
     }
     if (dotsContainer) {
       dotsContainer.querySelectorAll('button').forEach((d, i) => {
@@ -51,8 +62,7 @@ export function initAboutGallery() {
   }
 
   function goTo(i) {
-    const total = slides.length;
-    index = (i + total) % total;
+    index = (i + totalReal) % totalReal;
     update();
   }
 
@@ -66,16 +76,28 @@ export function initAboutGallery() {
       if (scrollRaf) cancelAnimationFrame(scrollRaf);
       scrollRaf = requestAnimationFrame(() => {
         const w = track.clientWidth || 1;
-        const newIndex = Math.round(track.scrollLeft / w);
-        if (newIndex !== index) {
-          index = Math.max(0, Math.min(slides.length - 1, newIndex));
-          if (dotsContainer) {
-            dotsContainer.querySelectorAll('button').forEach((d, i) => {
-              d.classList.toggle('active', i === index);
-            });
-          }
-          preloadNeighbors();
+        const raw = Math.round(track.scrollLeft / w);
+
+        // raw positions: 0 = lastClone, 1..totalReal = real slides, totalReal+1 = firstClone
+        if (raw <= 0) {
+          // Jump to last real slide (no animation)
+          track.scrollTo({ left: totalReal * w, behavior: 'auto' });
+          index = totalReal - 1;
+        } else if (raw >= totalAll - 1) {
+          // Jump to first real slide (no animation)
+          track.scrollTo({ left: 1 * w, behavior: 'auto' });
+          index = 0;
+        } else {
+          const newIndex = Math.max(0, Math.min(totalReal - 1, raw - 1));
+          if (newIndex !== index) index = newIndex;
         }
+
+        if (dotsContainer) {
+          dotsContainer.querySelectorAll('button').forEach((d, i) => {
+            d.classList.toggle('active', i === index);
+          });
+        }
+        preloadNeighbors();
       });
     },
     { passive: true }
@@ -84,7 +106,13 @@ export function initAboutGallery() {
   // Keep current slide aligned after orientation change / resize
   window.addEventListener('resize', () => {
     const w = track.clientWidth || 0;
-    if (w) track.scrollTo({ left: index * w, behavior: 'auto' });
+    if (w) track.scrollTo({ left: (index + 1) * w, behavior: 'auto' });
+  });
+
+  // Start from the first real slide (skip leading clone)
+  requestAnimationFrame(() => {
+    const w = track.clientWidth || 0;
+    if (w) track.scrollTo({ left: 1 * w, behavior: 'auto' });
   });
 
   preloadNeighbors();

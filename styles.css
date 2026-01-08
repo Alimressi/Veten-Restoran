@@ -518,12 +518,18 @@ section h2::after {
     inset: 0;
     display: none;
     z-index: 1500;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(2px);
+    background: transparent;
     overflow-x: hidden;
 }
 
 .reservation-modal.open { display: block; }
+
+.reservation-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(2px);
+}
 
 .reservation-modal-content {
     position: relative;
