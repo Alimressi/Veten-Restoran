@@ -23,7 +23,10 @@ export function initAboutGallery() {
   }
 
   function update() {
-    track.style.transform = `translateX(-${index * 100}%)`;
+    const w = track.clientWidth || 0;
+    if (w) {
+      track.scrollTo({ left: index * w, behavior: 'smooth' });
+    }
     if (dotsContainer) {
       dotsContainer.querySelectorAll('button').forEach((d, i) => {
         d.classList.toggle('active', i === index);
@@ -40,100 +43,32 @@ export function initAboutGallery() {
   prevBtn && prevBtn.addEventListener('click', () => goTo(index - 1));
   nextBtn && nextBtn.addEventListener('click', () => goTo(index + 1));
 
-  const SWIPE_MIN = 50;
-  const SWIPE_MAX_OFF_AXIS = 70;
-  let startX = 0;
-  let startY = 0;
-  let isTouchSwiping = false;
-  let isDown = false;
-  let activePointerId = null;
-  let lastSwipeAt = 0;
-  track.style.cursor = 'grab';
-  try { track.style.touchAction = 'pan-y'; } catch (_) {}
+  let scrollRaf = null;
+  track.addEventListener(
+    'scroll',
+    () => {
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = requestAnimationFrame(() => {
+        const w = track.clientWidth || 1;
+        const newIndex = Math.round(track.scrollLeft / w);
+        if (newIndex !== index) {
+          index = Math.max(0, Math.min(slides.length - 1, newIndex));
+          if (dotsContainer) {
+            dotsContainer.querySelectorAll('button').forEach((d, i) => {
+              d.classList.toggle('active', i === index);
+            });
+          }
+        }
+      });
+    },
+    { passive: true }
+  );
 
-  const isTouchDevice = 'ontouchstart' in window || (navigator && navigator.maxTouchPoints > 0);
-  const useTouchSwipe = isTouchDevice;
-
-  function finishSwipe(dx, dy) {
-    const now = Date.now();
-    if (now - lastSwipeAt < 250) return;
-    if (Math.abs(dx) < SWIPE_MIN) return;
-    if (Math.abs(dy) > SWIPE_MAX_OFF_AXIS) return;
-    lastSwipeAt = now;
-    dx > 0 ? goTo(index - 1) : goTo(index + 1);
-  }
-
-  if (!useTouchSwipe) {
-    track.addEventListener('pointerdown', (e) => {
-      isDown = true;
-      activePointerId = e.pointerId;
-      startX = e.clientX;
-      startY = e.clientY;
-      try { track.setPointerCapture(e.pointerId); } catch (_) {}
-      track.style.cursor = 'grabbing';
-    });
-
-    track.addEventListener('pointerup', (e) => {
-      if (!isDown) return;
-      if (activePointerId !== null && e.pointerId !== activePointerId) return;
-      const dx = e.clientX - startX;
-      const dy = e.clientY - startY;
-      finishSwipe(dx, dy);
-      isDown = false;
-      activePointerId = null;
-      try { track.releasePointerCapture(e.pointerId); } catch (_) {}
-      track.style.cursor = 'grab';
-    });
-
-    track.addEventListener('pointercancel', () => {
-      isDown = false;
-      activePointerId = null;
-      track.style.cursor = 'grab';
-    });
-
-    track.addEventListener('lostpointercapture', () => {
-      isDown = false;
-      activePointerId = null;
-      track.style.cursor = 'grab';
-    });
-  }
-
-  if (useTouchSwipe) {
-    track.addEventListener('touchstart', (e) => {
-      if (!e.touches || e.touches.length !== 1) return;
-      const t = e.touches[0];
-      startX = t.clientX;
-      startY = t.clientY;
-      isTouchSwiping = false;
-    }, { passive: true });
-
-    track.addEventListener('touchmove', (e) => {
-      if (!e.touches || e.touches.length !== 1) return;
-      const t = e.touches[0];
-      const dx = t.clientX - startX;
-      const dy = t.clientY - startY;
-
-      // When the user is clearly swiping horizontally, prevent the page from scrolling.
-      // This avoids iOS Safari getting "stuck" after the first swipe.
-      if (Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) {
-        isTouchSwiping = true;
-        e.preventDefault();
-      }
-    }, { passive: false });
-
-    track.addEventListener('touchend', (e) => {
-      const t = e.changedTouches && e.changedTouches[0];
-      if (!t) return;
-      const dx = t.clientX - startX;
-      const dy = t.clientY - startY;
-      finishSwipe(dx, dy);
-      isTouchSwiping = false;
-    }, { passive: true });
-
-    track.addEventListener('touchcancel', () => {
-      isTouchSwiping = false;
-    }, { passive: true });
-  }
+  // Keep current slide aligned after orientation change / resize
+  window.addEventListener('resize', () => {
+    const w = track.clientWidth || 0;
+    if (w) track.scrollTo({ left: index * w, behavior: 'auto' });
+  });
 
   update();
 }
