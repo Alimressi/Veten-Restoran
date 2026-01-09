@@ -20,6 +20,24 @@ export function initReservation() {
   const guestsInput = form ? form.querySelector('input[name="guests"]') : null;
   const notice = form ? form.querySelector('.reservation-notice') : null;
 
+  let bodyLocked = false;
+  let lockedScrollY = 0;
+
+  const preventBackgroundTouchMove = (e) => {
+    if (!bodyLocked) return;
+    if (!modalContent) {
+      e.preventDefault();
+      return;
+    }
+    const target = e.target;
+    if (!(target instanceof Node)) {
+      e.preventDefault();
+      return;
+    }
+    // Allow scrolling only inside the modal content.
+    if (!modalContent.contains(target)) e.preventDefault();
+  };
+
   if (dateInput) {
     const today = new Date();
     const yyyy = today.getFullYear();
@@ -30,7 +48,30 @@ export function initReservation() {
   }
 
   function setBodyLocked(locked) {
-    document.body.style.overflow = locked ? 'hidden' : '';
+    if (locked && !bodyLocked) {
+      bodyLocked = true;
+      lockedScrollY = window.scrollY || window.pageYOffset || 0;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${lockedScrollY}px`;
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+      document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
+      document.addEventListener('touchmove', preventBackgroundTouchMove, { passive: false });
+      return;
+    }
+
+    if (!locked && bodyLocked) {
+      bodyLocked = false;
+      document.removeEventListener('touchmove', preventBackgroundTouchMove, { passive: false });
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      document.body.style.width = '';
+      document.body.style.overflow = '';
+      window.scrollTo(0, lockedScrollY);
+    }
   }
 
   function setNotice(type, text) {

@@ -514,12 +514,16 @@ section h2::after {
 
 /* Reservation Modal */
 .reservation-modal {
-    position: fixed;
-    inset: 0;
     display: none;
-    z-index: 1500;
-    background: transparent;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+    padding: 0 0 0 0;
     overflow-x: hidden;
+    overscroll-behavior: contain;
 }
 
 .reservation-modal.open { display: block; }
@@ -545,6 +549,7 @@ section h2::after {
     overflow-x: hidden;
     touch-action: pan-y;
     color-scheme: light;
+    overscroll-behavior: contain;
 }
 
 .reservation-modal-close {
