@@ -623,6 +623,12 @@ section h2::after {
     text-align: left;
 }
 
+.reservation-field input,
+.reservation-field select {
+    min-height: 48px;
+    line-height: 1.2;
+}
+
 .reservation-field select {
     background-color: #fff !important;
     color: var(--text-color) !important;
