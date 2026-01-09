@@ -115,6 +115,7 @@ export function initReservation() {
   buildTimeOptions();
 
   const lang = getLang();
+  const dict = (i18n && i18n[lang]) ? i18n[lang] : (i18n && i18n.ru ? i18n.ru : {});
 
   openBtn && openBtn.addEventListener('click', openModal);
   modal && modal.querySelectorAll('[data-close-modal="true"]').forEach((el) => {
