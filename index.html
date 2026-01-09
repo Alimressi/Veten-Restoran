@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="styles.css?v=20260108-2">
 </head>
 <body>
@@ -137,6 +138,7 @@
 
                     <label class="reservation-field">
                         <span data-i18n="reserve_time">Время</span>
+                        <input type="text" id="reservation-time-ui" class="reservation-time-ui" autocomplete="off" readonly aria-hidden="true" tabindex="-1" />
                         <select name="time" id="reservation-time" required></select>
                     </label>
 
@@ -235,10 +237,11 @@
             <div class="footer-content">
                 <div class="footer-logo" data-i18n="brand">Vətən</div>
                 <p>© 2025 Vətən Restoran. <span data-i18n="rights">Все права защищены.</span></p>
-                <p data-i18n="made_with_love">Сделано с <i class="fas fa-heart"></i> для ценителей азербайджанской кухни</p>
             </div>
         </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ru.js"></script>
     <script type="module" src="js/main.js?v=20260108-2"></script>
 </body>
 </html>
