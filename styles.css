@@ -596,6 +596,7 @@ section h2::after {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px;
+    overflow-x: hidden;
 }
 
 .reservation-field {
@@ -603,6 +604,7 @@ section h2::after {
     gap: 8px;
     color: var(--dark-color);
     font-weight: 500;
+    min-width: 0;
 }
 
 .reservation-field span { font-weight: 500; }
@@ -626,42 +628,44 @@ section h2::after {
 }
 
 .reservation-field input[type="date"] {
-    background-color: #fff;
-    color: var(--text-color);
-    -webkit-text-fill-color: var(--text-color);
+    background-color: #fff !important;
+    color: var(--text-color) !important;
+    -webkit-text-fill-color: var(--text-color) !important;
     appearance: none;
     -webkit-appearance: none;
     display: block;
-    width: 100%;
-    max-width: 100%;
+    width: 100% !important;
+    max-width: 100% !important;
     box-sizing: border-box;
+    min-width: 0;
+    caret-color: var(--text-color);
 }
 
 /* iOS Safari renders date value via internal pseudo-elements; force left alignment */
 .reservation-field input[type="date"]::-webkit-date-and-time-value {
     text-align: left;
-    color: var(--text-color);
-    -webkit-text-fill-color: var(--text-color);
+    color: var(--text-color) !important;
+    -webkit-text-fill-color: var(--text-color) !important;
 }
 
 .reservation-field input[type="date"]::-webkit-datetime-edit {
     text-align: left;
-    color: var(--text-color);
-    -webkit-text-fill-color: var(--text-color);
+    color: var(--text-color) !important;
+    -webkit-text-fill-color: var(--text-color) !important;
 }
 
 .reservation-field input[type="date"]::-webkit-datetime-edit-fields-wrapper {
     text-align: left;
-    color: var(--text-color);
-    -webkit-text-fill-color: var(--text-color);
+    color: var(--text-color) !important;
+    -webkit-text-fill-color: var(--text-color) !important;
 }
 
 .reservation-field input[type="date"]::-webkit-datetime-edit-text,
 .reservation-field input[type="date"]::-webkit-datetime-edit-month-field,
 .reservation-field input[type="date"]::-webkit-datetime-edit-day-field,
 .reservation-field input[type="date"]::-webkit-datetime-edit-year-field {
-    color: var(--text-color);
-    -webkit-text-fill-color: var(--text-color);
+    color: var(--text-color) !important;
+    -webkit-text-fill-color: var(--text-color) !important;
 }
 
 .reservation-field textarea { resize: vertical; min-height: 110px; }
