@@ -640,42 +640,6 @@ section h2::after {
 
 .reservation-field textarea { resize: vertical; min-height: 110px; }
 
-.reservation-time-ui { display: none; }
-
-.designer-pickers .reservation-time-ui {
-    display: block;
-}
-
-.designer-pickers #reservation-time {
-    display: none;
-}
-
-.flatpickr-calendar {
-    border-radius: 14px;
-    box-shadow: 0 18px 50px rgba(0,0,0,0.25);
-    border: 1px solid rgba(0,0,0,0.08);
-    font-family: inherit;
-}
-
-.flatpickr-day.selected,
-.flatpickr-day.startRange,
-.flatpickr-day.endRange,
-.flatpickr-day.selected:hover,
-.flatpickr-day.startRange:hover,
-.flatpickr-day.endRange:hover {
-    background: var(--primary-color);
-    border-color: var(--primary-color);
-}
-
-.flatpickr-day.today {
-    border-color: rgba(212, 167, 106, 0.75);
-}
-
-.flatpickr-time input,
-.flatpickr-time .flatpickr-am-pm {
-    font-family: inherit;
-}
-
 .reservation-field input:focus,
 .reservation-field select:focus,
 .reservation-field textarea:focus {

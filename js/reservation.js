@@ -1,7 +1,5 @@
 import { getLang, i18n } from './i18n.js';
 
-const USE_DESIGNER_PICKERS = true;
-
 function isValidPhone(raw) {
   const phone = String(raw || '').trim();
   if (!phone) return false;
@@ -17,7 +15,6 @@ export function initReservation() {
   const form = document.getElementById('reservation-form');
   const modalContent = modal ? modal.querySelector('.reservation-modal-content') : null;
   const timeSelect = document.getElementById('reservation-time');
-  const timeUiInput = document.getElementById('reservation-time-ui');
   const dateInput = document.getElementById('reservation-date');
   const phoneInput = form ? form.querySelector('input[name="phone"]') : null;
   const guestsInput = form ? form.querySelector('input[name="guests"]') : null;
@@ -118,71 +115,6 @@ export function initReservation() {
   buildTimeOptions();
 
   const lang = getLang();
-  const dict = i18n[lang] || i18n.ru;
-
-  if (USE_DESIGNER_PICKERS && form && typeof window !== 'undefined' && typeof window.flatpickr === 'function') {
-    form.classList.add('designer-pickers');
-
-    if (dateInput) {
-      const locale = lang === 'ru' && window.flatpickr.l10ns && window.flatpickr.l10ns.ru ? window.flatpickr.l10ns.ru : undefined;
-      window.flatpickr(dateInput, {
-        disableMobile: true,
-        dateFormat: 'Y-m-d',
-        minDate: dateInput.min || undefined,
-        defaultDate: dateInput.value || undefined,
-        locale,
-      });
-    }
-
-    if (timeSelect && timeUiInput) {
-      timeUiInput.removeAttribute('aria-hidden');
-      timeUiInput.removeAttribute('tabindex');
-      timeUiInput.placeholder = dict.reserve_time;
-      timeUiInput.value = String(timeSelect.value || '');
-
-      const ensureOption = (val) => {
-        if (!val) return;
-        const existing = Array.from(timeSelect.options).some((o) => o.value === val);
-        if (!existing) {
-          const opt = document.createElement('option');
-          opt.value = val;
-          opt.textContent = val;
-          timeSelect.appendChild(opt);
-        }
-        timeSelect.value = val;
-      };
-
-      const toTime = (d) => {
-        const hh = String(d.getHours()).padStart(2, '0');
-        const mm = String(d.getMinutes()).padStart(2, '0');
-        return `${hh}:${mm}`;
-      };
-
-      window.flatpickr(timeUiInput, {
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: 'H:i',
-        time_24hr: true,
-        minuteIncrement: 15,
-        disableMobile: true,
-        defaultDate: timeSelect.value || '19:00',
-        onChange: (selected) => {
-          const d = selected && selected[0];
-          const val = d instanceof Date ? toTime(d) : String(timeUiInput.value || '');
-          timeUiInput.value = val;
-          ensureOption(val);
-        },
-        onValueUpdate: (selected) => {
-          const d = selected && selected[0];
-          const val = d instanceof Date ? toTime(d) : String(timeUiInput.value || '');
-          timeUiInput.value = val;
-          ensureOption(val);
-        },
-      });
-
-      ensureOption(timeUiInput.value);
-    }
-  }
 
   openBtn && openBtn.addEventListener('click', openModal);
   modal && modal.querySelectorAll('[data-close-modal="true"]').forEach((el) => {
