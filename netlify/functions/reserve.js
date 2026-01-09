@@ -79,7 +79,6 @@ exports.handler = async (event) => {
   const time = String(body.time || '').trim();
   const guests = String(body.guests || '').trim();
   const phone = String(body.phone || '').trim();
-  const email = String(body.email || '').trim();
   const message = String(body.message || '').trim();
   const website = String(body.website || '').trim();
   const lang = String(body.lang || '').trim();
@@ -141,7 +140,6 @@ exports.handler = async (event) => {
     `<b>⏰ Saat:</b> ${escapeHtml(time)}`,
     `<b>👥 Qonaq sayı:</b> ${escapeHtml(guests)}`,
     `<b>📞 Telefon:</b> <a href="${escapeHtml(tel)}">${escapeHtml(phone)}</a>`,
-    email ? `<b>✉️ Email:</b> ${escapeHtml(email)}` : null,
     message ? `<b>📝 Mesaj:</b> ${escapeHtml(message)}` : null,
   ].filter(Boolean);
 

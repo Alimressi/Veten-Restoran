@@ -135,7 +135,6 @@ export function initReservation() {
         time: String(data.get('time') || '').trim(),
         guests: data.get('guests'),
         phone: data.get('phone'),
-        email: data.get('email'),
         message: data.get('message'),
         website: data.get('website'),
         lang,
