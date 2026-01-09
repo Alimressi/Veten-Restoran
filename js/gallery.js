@@ -6,6 +6,9 @@ export function initAboutGallery() {
   const realSlides = Array.from(track ? track.querySelectorAll('img') : []);
   if (!track || realSlides.length === 0) return;
 
+  // Prevent initial flash of the leading clone (which is the last slide)
+  track.style.visibility = 'hidden';
+
   // Infinite loop on touch devices via clones (works reliably with scroll-snap)
   const firstClone = realSlides[0].cloneNode(true);
   const lastClone = realSlides[realSlides.length - 1].cloneNode(true);
@@ -37,6 +40,26 @@ export function initAboutGallery() {
     preload(index + 1);
   }
 
+  function preloadAllSlides() {
+    const srcs = realSlides
+      .map((img) => img.getAttribute('src'))
+      .filter(Boolean);
+
+    let i = 0;
+    const loadNext = () => {
+      if (i >= srcs.length) return;
+      const img = new Image();
+      img.decoding = 'async';
+      img.src = srcs[i];
+      i += 1;
+      img.onload = () => setTimeout(loadNext, 60);
+      img.onerror = () => setTimeout(loadNext, 60);
+    };
+
+    // Give the first paint a chance, then start warming cache.
+    setTimeout(loadNext, 250);
+  }
+
   if (dotsContainer) {
     dotsContainer.innerHTML = '';
     realSlides.forEach((_, i) => {
@@ -48,10 +71,10 @@ export function initAboutGallery() {
     });
   }
 
-  function update() {
+  function update({ scroll = true, behavior = 'smooth' } = {}) {
     const w = track.clientWidth || 0;
-    if (w) {
-      track.scrollTo({ left: (index + 1) * w, behavior: 'smooth' });
+    if (scroll && w) {
+      track.scrollTo({ left: (index + 1) * w, behavior });
     }
     if (dotsContainer) {
       dotsContainer.querySelectorAll('button').forEach((d, i) => {
@@ -66,8 +89,34 @@ export function initAboutGallery() {
     update();
   }
 
-  prevBtn && prevBtn.addEventListener('click', () => goTo(index - 1));
-  nextBtn && nextBtn.addEventListener('click', () => goTo(index + 1));
+  function goNext() {
+    const w = track.clientWidth || 0;
+    if (!w) return;
+    if (index === totalReal - 1) {
+      // Animate to the trailing clone (firstClone), then the scroll handler will jump to the real first slide.
+      track.scrollTo({ left: (totalReal + 1) * w, behavior: 'smooth' });
+      index = 0;
+      update({ scroll: false });
+      return;
+    }
+    goTo(index + 1);
+  }
+
+  function goPrev() {
+    const w = track.clientWidth || 0;
+    if (!w) return;
+    if (index === 0) {
+      // Animate to the leading clone (lastClone), then the scroll handler will jump to the real last slide.
+      track.scrollTo({ left: 0, behavior: 'smooth' });
+      index = totalReal - 1;
+      update({ scroll: false });
+      return;
+    }
+    goTo(index - 1);
+  }
+
+  prevBtn && prevBtn.addEventListener('click', goPrev);
+  nextBtn && nextBtn.addEventListener('click', goNext);
 
   let scrollRaf = null;
   track.addEventListener(
@@ -113,8 +162,11 @@ export function initAboutGallery() {
   requestAnimationFrame(() => {
     const w = track.clientWidth || 0;
     if (w) track.scrollTo({ left: 1 * w, behavior: 'auto' });
+    track.style.visibility = '';
+    // Initialize UI state without causing an initial smooth scroll
+    update({ scroll: false });
+    preloadAllSlides();
   });
 
   preloadNeighbors();
-  update();
 }
