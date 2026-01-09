@@ -625,17 +625,43 @@ section h2::after {
     text-align: left;
 }
 
+.reservation-field input[type="date"] {
+    background-color: #fff;
+    color: var(--text-color);
+    -webkit-text-fill-color: var(--text-color);
+    appearance: none;
+    -webkit-appearance: none;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
 /* iOS Safari renders date value via internal pseudo-elements; force left alignment */
 .reservation-field input[type="date"]::-webkit-date-and-time-value {
     text-align: left;
+    color: var(--text-color);
+    -webkit-text-fill-color: var(--text-color);
 }
 
 .reservation-field input[type="date"]::-webkit-datetime-edit {
     text-align: left;
+    color: var(--text-color);
+    -webkit-text-fill-color: var(--text-color);
 }
 
 .reservation-field input[type="date"]::-webkit-datetime-edit-fields-wrapper {
     text-align: left;
+    color: var(--text-color);
+    -webkit-text-fill-color: var(--text-color);
+}
+
+.reservation-field input[type="date"]::-webkit-datetime-edit-text,
+.reservation-field input[type="date"]::-webkit-datetime-edit-month-field,
+.reservation-field input[type="date"]::-webkit-datetime-edit-day-field,
+.reservation-field input[type="date"]::-webkit-datetime-edit-year-field {
+    color: var(--text-color);
+    -webkit-text-fill-color: var(--text-color);
 }
 
 .reservation-field textarea { resize: vertical; min-height: 110px; }
