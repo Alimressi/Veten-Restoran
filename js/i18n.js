@@ -147,6 +147,8 @@ export function applyI18n(lang) {
   document.querySelectorAll('.lang-btn').forEach((btn) => {
     btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
   });
+
+  try { document.documentElement.style.visibility = ''; } catch (_) {}
 }
 
 export function initLangSwitcher() {

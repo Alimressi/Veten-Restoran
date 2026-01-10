@@ -155,9 +155,6 @@ export function initReservation() {
 
   buildTimeOptions();
 
-  const lang = getLang();
-  const dict = (i18n && i18n[lang]) ? i18n[lang] : (i18n && i18n.ru ? i18n.ru : {});
-
   openBtn && openBtn.addEventListener('click', openModal);
   modal && modal.querySelectorAll('[data-close-modal="true"]').forEach((el) => {
     el.addEventListener('click', closeModal);
@@ -169,6 +166,10 @@ export function initReservation() {
   if (form) {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+
+      const lang = getLang();
+      const dict = (i18n && i18n[lang]) ? i18n[lang] : (i18n && i18n.ru ? i18n.ru : {});
+
       const data = new FormData(form);
       const payload = {
         branch: String(data.get('branch') || '').trim(),
