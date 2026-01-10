@@ -2,6 +2,44 @@ const RATE_WINDOW_MS = 30_000;
 const RATE_MAX = 2;
 const rateMap = new Map();
 
+async function insertReservationToSupabase({
+  branch,
+  date,
+  time,
+  guests,
+  phone,
+  message,
+  lang,
+}) {
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!supabaseUrl || !serviceKey) return null;
+
+  const res = await fetch(`${String(supabaseUrl).replace(/\/+$/, '')}/rest/v1/reservations`, {
+    method: 'POST',
+    headers: {
+      apikey: serviceKey,
+      authorization: `Bearer ${serviceKey}`,
+      'content-type': 'application/json',
+      prefer: 'return=representation',
+    },
+    body: JSON.stringify({
+      branch,
+      date,
+      time,
+      guests: Number(guests),
+      phone,
+      message: message || null,
+      lang: lang || null,
+      status: 'submitted',
+    }),
+  });
+
+  const json = await res.json().catch(() => null);
+  if (!res.ok || !Array.isArray(json) || !json[0] || !json[0].id) return null;
+  return String(json[0].id);
+}
+
 try {
   const dns = require('dns');
   if (typeof dns.setDefaultResultOrder === 'function') dns.setDefaultResultOrder('ipv4first');
@@ -131,9 +169,20 @@ exports.handler = async (event) => {
   const phoneDigits = phone.replace(/\D/g, '');
   const tel = phoneDigits ? `tel:+${phoneDigits}` : `tel:${phone}`;
 
+  const reservationId = await insertReservationToSupabase({
+    branch,
+    date,
+    time,
+    guests,
+    phone,
+    message,
+    lang: safeLang,
+  }).catch(() => null);
+
   const htmlLines = [
     '<b>📌 Yeni masa bronu</b>',
     '',
+    reservationId ? `<b>🆔 ID:</b> ${escapeHtml(reservationId)}` : null,
     `<b>🌐 Dil:</b> ${escapeHtml(safeLang)}`,
     `<b>🏢 Filial:</b> ${escapeHtml(branch)}`,
     `<b>📅 Tarix:</b> ${escapeHtml(dateFormatted)}`,
