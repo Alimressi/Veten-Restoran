@@ -2,6 +2,15 @@ const RATE_WINDOW_MS = 30_000;
 const RATE_MAX = 2;
 const rateMap = new Map();
 
+function generatePublicCode(len = 6) {
+  const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let out = '';
+  for (let i = 0; i < len; i += 1) {
+    out += alphabet[Math.floor(Math.random() * alphabet.length)];
+  }
+  return out;
+}
+
 async function insertReservationToSupabase({
   branch,
   date,
@@ -15,6 +24,8 @@ async function insertReservationToSupabase({
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!supabaseUrl || !serviceKey) return null;
 
+  const publicCode = generatePublicCode(6);
+
   const res = await fetch(`${String(supabaseUrl).replace(/\/+$/, '')}/rest/v1/reservations`, {
     method: 'POST',
     headers: {
@@ -24,6 +35,7 @@ async function insertReservationToSupabase({
       prefer: 'return=representation',
     },
     body: JSON.stringify({
+      public_code: publicCode,
       branch,
       date,
       time,
@@ -37,7 +49,7 @@ async function insertReservationToSupabase({
 
   const json = await res.json().catch(() => null);
   if (!res.ok || !Array.isArray(json) || !json[0] || !json[0].id) return null;
-  return String(json[0].id);
+  return { id: String(json[0].id), publicCode: String(json[0].public_code || publicCode) };
 }
 
 try {
@@ -169,7 +181,7 @@ exports.handler = async (event) => {
   const phoneDigits = phone.replace(/\D/g, '');
   const tel = phoneDigits ? `tel:+${phoneDigits}` : `tel:${phone}`;
 
-  const reservationId = await insertReservationToSupabase({
+  const reservationRef = await insertReservationToSupabase({
     branch,
     date,
     time,
@@ -182,7 +194,7 @@ exports.handler = async (event) => {
   const htmlLines = [
     '<b>📌 Yeni masa bronu</b>',
     '',
-    reservationId ? `<b>🆔 ID:</b> ${escapeHtml(reservationId)}` : null,
+    reservationRef && reservationRef.publicCode ? `<b>🆔 Kod:</b> ${escapeHtml(reservationRef.publicCode)}` : null,
     `<b>🌐 Dil:</b> ${escapeHtml(safeLang)}`,
     `<b>🏢 Filial:</b> ${escapeHtml(branch)}`,
     `<b>📅 Tarix:</b> ${escapeHtml(dateFormatted)}`,
