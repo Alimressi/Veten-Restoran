@@ -25,6 +25,7 @@ export function initAboutGallery() {
   const dotsContainer = gallery.querySelector('.about-gallery-dots');
   let index = 0;
   let isReady = false;
+  let hasInteracted = false;
 
   function preload(i) {
     if (i < 0 || i >= totalReal) return;
@@ -119,6 +120,16 @@ export function initAboutGallery() {
   prevBtn && prevBtn.addEventListener('click', goPrev);
   nextBtn && nextBtn.addEventListener('click', goNext);
 
+  // iOS Safari can fire an early scroll that briefly snaps to scrollLeft=0.
+  // We only allow "infinite loop" boundary jumps after the user interacts.
+  const markInteracted = () => {
+    hasInteracted = true;
+  };
+  gallery.addEventListener('pointerdown', markInteracted, { passive: true });
+  gallery.addEventListener('touchstart', markInteracted, { passive: true });
+  prevBtn && prevBtn.addEventListener('click', markInteracted);
+  nextBtn && nextBtn.addEventListener('click', markInteracted);
+
   let scrollRaf = null;
   track.addEventListener(
     'scroll',
@@ -131,9 +142,15 @@ export function initAboutGallery() {
 
         // raw positions: 0 = lastClone, 1..totalReal = real slides, totalReal+1 = firstClone
         if (raw <= 0) {
-          // Jump to last real slide (no animation)
-          track.scrollTo({ left: totalReal * w, behavior: 'auto' });
-          index = totalReal - 1;
+          if (!hasInteracted) {
+            // During initial load, force the gallery to the first real slide.
+            track.scrollTo({ left: 1 * w, behavior: 'auto' });
+            index = 0;
+          } else {
+            // Jump to last real slide (no animation)
+            track.scrollTo({ left: totalReal * w, behavior: 'auto' });
+            index = totalReal - 1;
+          }
         } else if (raw >= totalAll - 1) {
           // Jump to first real slide (no animation)
           track.scrollTo({ left: 1 * w, behavior: 'auto' });
