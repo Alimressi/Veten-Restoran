@@ -158,14 +158,48 @@ export function initAboutGallery() {
     if (w) track.scrollTo({ left: (index + 1) * w, behavior: 'auto' });
   });
 
+  function ensureStartPosition() {
+    let tries = 0;
+    const maxTries = 20;
+
+    const tick = () => {
+      const w = track.clientWidth || 0;
+
+      // On iOS Safari `clientWidth` can be 0 during early frames, causing the
+      // gallery to remain at scrollLeft=0 (leading clone / last slide).
+      if (w > 0) {
+        index = 0;
+        track.scrollTo({ left: 1 * w, behavior: 'auto' });
+        track.style.visibility = '';
+        // Initialize UI state without causing an initial smooth scroll
+        update({ scroll: false });
+        preloadAllSlides();
+        return;
+      }
+
+      tries += 1;
+      if (tries >= maxTries) {
+        // Worst-case fallback: unhide to avoid leaving the gallery invisible.
+        track.style.visibility = '';
+        update({ scroll: false });
+        preloadAllSlides();
+        return;
+      }
+
+      requestAnimationFrame(tick);
+    };
+
+    requestAnimationFrame(tick);
+  }
+
   // Start from the first real slide (skip leading clone)
-  requestAnimationFrame(() => {
-    const w = track.clientWidth || 0;
-    if (w) track.scrollTo({ left: 1 * w, behavior: 'auto' });
-    track.style.visibility = '';
-    // Initialize UI state without causing an initial smooth scroll
-    update({ scroll: false });
-    preloadAllSlides();
+  ensureStartPosition();
+
+  // iOS Safari may restore previous scroll position from bfcache
+  window.addEventListener('pageshow', (e) => {
+    if (!e || !e.persisted) return;
+    track.style.visibility = 'hidden';
+    ensureStartPosition();
   });
 
   preloadNeighbors();
