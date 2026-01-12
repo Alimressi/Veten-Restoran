@@ -24,6 +24,7 @@ export function initAboutGallery() {
   const nextBtn = gallery.querySelector('.about-gallery-nav.next');
   const dotsContainer = gallery.querySelector('.about-gallery-dots');
   let index = 0;
+  let isReady = false;
 
   function preload(i) {
     if (i < 0 || i >= totalReal) return;
@@ -122,6 +123,7 @@ export function initAboutGallery() {
   track.addEventListener(
     'scroll',
     () => {
+      if (!isReady) return;
       if (scrollRaf) cancelAnimationFrame(scrollRaf);
       scrollRaf = requestAnimationFrame(() => {
         const w = track.clientWidth || 1;
@@ -162,6 +164,9 @@ export function initAboutGallery() {
     let tries = 0;
     const maxTries = 20;
 
+    isReady = false;
+    track.style.scrollSnapType = 'none';
+
     const tick = () => {
       const w = track.clientWidth || 0;
 
@@ -170,10 +175,15 @@ export function initAboutGallery() {
       if (w > 0) {
         index = 0;
         track.scrollTo({ left: 1 * w, behavior: 'auto' });
-        track.style.visibility = '';
-        // Initialize UI state without causing an initial smooth scroll
-        update({ scroll: false });
-        preloadAllSlides();
+        // Let iOS settle scrollLeft before enabling the scroll handler + scroll-snap
+        requestAnimationFrame(() => {
+          track.style.scrollSnapType = '';
+          track.style.visibility = '';
+          isReady = true;
+          // Initialize UI state without causing an initial smooth scroll
+          update({ scroll: false });
+          preloadAllSlides();
+        });
         return;
       }
 
