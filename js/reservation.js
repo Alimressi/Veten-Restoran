@@ -9,6 +9,26 @@ function isValidPhone(raw) {
   return digits.length >= 9 && digits.length <= 15;
 }
 
+const RESERVE_COOLDOWN_MS = 60_000;
+const RESERVE_LAST_SENT_KEY = 'reserve_last_sent_at';
+
+function getCooldownLeftMs() {
+  try {
+    const last = Number(localStorage.getItem(RESERVE_LAST_SENT_KEY) || '0');
+    const now = Date.now();
+    const left = last + RESERVE_COOLDOWN_MS - now;
+    return Number.isFinite(left) ? Math.max(0, left) : 0;
+  } catch (_) {
+    return 0;
+  }
+}
+
+function setLastSentNow() {
+  try {
+    localStorage.setItem(RESERVE_LAST_SENT_KEY, String(Date.now()));
+  } catch (_) {}
+}
+
 export function initReservation() {
   const modal = document.getElementById('reservation-modal');
   const openBtn = document.getElementById('open-reservation');
@@ -189,6 +209,12 @@ export function initReservation() {
         return;
       }
 
+      const cooldownLeft = getCooldownLeftMs();
+      if (cooldownLeft > 0) {
+        setNotice('error', dict.reserve_too_many || dict.reserve_error);
+        return;
+      }
+
       const submitBtn = form.querySelector('button[type="submit"]');
       const spinner = form.querySelector('.btn-spinner');
       const prevDisabled = submitBtn ? submitBtn.disabled : false;
@@ -202,6 +228,11 @@ export function initReservation() {
           body: JSON.stringify(payload),
         });
         const json = await res.json().catch(() => null);
+
+        if (res.status === 429) {
+          setNotice('error', dict.reserve_too_many || dict.reserve_error);
+          return;
+        }
         if (!res.ok || !json || json.ok !== true) {
           const err = json && typeof json.error === 'string' ? json.error : null;
           if (err === 'Invalid phone') {
@@ -212,6 +243,7 @@ export function initReservation() {
         }
 
         setNotice('success', dict.reserve_success);
+        setLastSentNow();
         form.reset();
         buildTimeOptions();
         if (dateInput) dateInput.value = dateInput.min;

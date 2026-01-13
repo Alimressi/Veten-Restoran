@@ -39,6 +39,7 @@ export const i18n = {
     reserve_submit: 'Отправить',
     reserve_success: 'Заявка на бронирование отправлена. Мы свяжемся с вами по телефону в ближайшее время.',
     reserve_error: 'Не удалось отправить заявку. Попробуйте ещё раз или свяжитесь с нами по телефону.',
+    reserve_too_many: 'Вы слишком часто отправляете заявку. Пожалуйста, подождите немного и попробуйте снова.',
   },
   az: {
     brand: 'Vətən Restoran',
@@ -80,6 +81,7 @@ export const i18n = {
     reserve_submit: 'Göndər',
     reserve_success: 'Bron sorğunuz göndərildi. Tezliklə sizinlə telefonla əlaqə saxlanılacaq.',
     reserve_error: 'Sorğunu göndərmək alınmadı. Zəhmət olmasa bir daha cəhd edin və ya bizimlə telefonla əlaqə saxlayın.',
+    reserve_too_many: 'Sorğunu çox tez-tez göndərirsiniz. Zəhmət olmasa bir az gözləyin və yenidən cəhd edin.',
   },
   en: {
     brand: 'Veten Restaurant',
@@ -121,6 +123,7 @@ export const i18n = {
     reserve_submit: 'Submit',
     reserve_success: 'Your reservation request has been sent. We will contact you by phone shortly.',
     reserve_error: 'Could not send the request. Please try again or contact us by phone.',
+    reserve_too_many: 'You are sending requests too frequently. Please wait a moment and try again.',
   },
 };
 

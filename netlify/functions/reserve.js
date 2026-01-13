@@ -1,6 +1,7 @@
 const RATE_WINDOW_MS = 30_000;
 const RATE_MAX = 2;
 const rateMap = new Map();
+const phoneRateMap = new Map();
 
 function generatePublicCode(len = 6) {
   const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
@@ -92,6 +93,19 @@ function getClientIp(event) {
   return event.headers['client-ip'] || event.headers['Client-Ip'] || 'unknown';
 }
 
+function checkRateLimit(map, key, { windowMs, max }) {
+  const now = Date.now();
+  const entry = map.get(key) || { count: 0, resetAt: now + windowMs };
+  if (now > entry.resetAt) {
+    entry.count = 0;
+    entry.resetAt = now + windowMs;
+  }
+  entry.count += 1;
+  map.set(key, entry);
+  const retryAfterMs = Math.max(0, entry.resetAt - now);
+  return { allowed: entry.count <= max, retryAfterMs };
+}
+
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return {
@@ -142,29 +156,25 @@ exports.handler = async (event) => {
     };
   }
 
-  // Basic rate-limit (best-effort, per function instance)
-  const ip = getClientIp(event);
-  const now = Date.now();
-  const entry = rateMap.get(ip) || { count: 0, resetAt: now + RATE_WINDOW_MS };
-  if (now > entry.resetAt) {
-    entry.count = 0;
-    entry.resetAt = now + RATE_WINDOW_MS;
-  }
-  entry.count += 1;
-  rateMap.set(ip, entry);
-  if (entry.count > RATE_MAX) {
-    return {
-      statusCode: 429,
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ ok: false, error: 'Too many requests' }),
-    };
-  }
-
   if (!branch || !date || !time || !guests || !phone) {
     return {
       statusCode: 400,
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ ok: false, error: 'Missing required fields' }),
+    };
+  }
+
+  // Basic rate-limit (best-effort, per function instance)
+  const ip = getClientIp(event);
+  const ipLimit = checkRateLimit(rateMap, ip, { windowMs: RATE_WINDOW_MS, max: RATE_MAX });
+  if (!ipLimit.allowed) {
+    return {
+      statusCode: 429,
+      headers: {
+        'content-type': 'application/json',
+        'retry-after': String(Math.ceil(ipLimit.retryAfterMs / 1000)),
+      },
+      body: JSON.stringify({ ok: false, error: 'Too many requests' }),
     };
   }
 
@@ -176,9 +186,22 @@ exports.handler = async (event) => {
     };
   }
 
+  const phoneDigits = phone.replace(/\D/g, '');
+  const phoneKey = phoneDigits ? `+${phoneDigits}` : phone;
+  const phoneLimit = checkRateLimit(phoneRateMap, phoneKey, { windowMs: 60_000, max: 1 });
+  if (!phoneLimit.allowed) {
+    return {
+      statusCode: 429,
+      headers: {
+        'content-type': 'application/json',
+        'retry-after': String(Math.ceil(phoneLimit.retryAfterMs / 1000)),
+      },
+      body: JSON.stringify({ ok: false, error: 'Too many requests' }),
+    };
+  }
+
   const safeLang = ['ru', 'az', 'en'].includes(lang) ? lang : 'az';
   const dateFormatted = formatDateDdMmYyyy(date);
-  const phoneDigits = phone.replace(/\D/g, '');
   const tel = phoneDigits ? `tel:+${phoneDigits}` : `tel:${phone}`;
 
   const reservationRef = await insertReservationToSupabase({
