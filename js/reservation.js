@@ -222,7 +222,7 @@ export function initReservation() {
       if (spinner) spinner.classList.add('active');
 
       try {
-        const res = await fetch('/.netlify/functions/reserve', {
+        const res = await fetch('/api/reserve', {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
           body: JSON.stringify(payload),
