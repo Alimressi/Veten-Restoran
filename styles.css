@@ -579,8 +579,9 @@ section h2::after {
     display: none;
     padding: 10px 12px;
     border-radius: 10px;
+    text-align: center;
     border: 1px solid transparent;
-    font-weight: 500;
+    font-size: 14px;
     line-height: 1.35;
 }
 
