@@ -4,3 +4,6 @@
 # Environment variables / secrets
 .env
 .env.*
+
+ # macOS
+ .DS_Store
