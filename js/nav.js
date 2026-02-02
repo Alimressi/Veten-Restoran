@@ -41,6 +41,11 @@ export function initNav() {
         window.scrollTo({ top: targetY, behavior: 'smooth' });
         navLinks && navLinks.classList.remove('active');
         navOverlay && navOverlay.classList.remove('active');
+        // Update active state immediately after click
+        navAnchors.forEach((a) => {
+          a.classList.remove('active');
+        });
+        link.classList.add('active');
       }
     });
   });
