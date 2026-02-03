@@ -897,9 +897,38 @@ section h2::after {
     color: #aaa;
 }
 
-.footer i {
-    color: #ff6b6b;
-    margin: 0 5px;
+.footer-social {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.footer-social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.footer-social-link:hover {
+    background: var(--primary-color);
+    transform: translateY(-2px);
+    color: #fff;
+}
+
+.footer-social-link i {
+    margin: 0;
+    font-weight: 400;
 }
 
 /* Animations */
