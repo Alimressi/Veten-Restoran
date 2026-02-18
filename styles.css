@@ -1,6 +1,6 @@
 /* Base Styles */
 :root {
-    --primary-color: #d4a76a;
+    --primary-color: #584334;
     --secondary-color: #8b0000;
     --dark-color: #333;
     --light-color: #f4f4f4;
@@ -119,6 +119,7 @@ section h2 {
     text-align: center;
     font-size: 2.5rem;
     margin-bottom: 50px;
+    color: var(--primary-color);
     position: relative;
     padding-bottom: 15px;
 }
@@ -148,35 +149,85 @@ section h2::after {
 
 .header.scrolled {
     background: rgba(255, 255, 255, 0.98);
-    padding: 10px 0;
 }
 
 .navbar {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: auto 1fr auto auto auto;
     align-items: center;
-    padding: 20px 5%;
+    padding: 12px 5%;
 }
 
 /* (Removed) Mega Menu styles */
 
 .logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem;
-    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+}
+
+.site-logo {
+    width: 58px;
+    height: 58px;
+    object-fit: contain;
+    flex: 0 0 auto;
+}
+
+.header-social {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: 14px;
+}
+
+.header-social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.04);
     color: var(--primary-color);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.header-social-link:visited,
+.header-social-link:active,
+.header-social-link:focus {
+    color: var(--primary-color);
+}
+
+.header-social-link:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-1px);
+}
+
+.header-social-link svg {
+    display: block;
+}
+
+@media (min-width: 769px) {
+    .header-social {
+        display: none;
+    }
 }
 
 .nav-links {
     display: flex;
     gap: 30px;
+    justify-content: center;
 }
 
 /* Language Switcher */
 .lang-switch {
     display: flex;
     gap: 8px;
-    margin-left: 20px;
+    margin-left: 0;
+    justify-self: end;
 }
 
 .desktop-only { display: flex; }
@@ -314,6 +365,7 @@ section h2::after {
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
+    scroll-snap-stop: always;
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
     scrollbar-width: none;
@@ -329,6 +381,11 @@ section h2::after {
     scroll-snap-align: start;
     display: block;
     background: #f2f2f2;
+}
+
+.about-gallery-track img[src*="/int2.jpg"],
+.about-gallery-track img[src$="int2.jpg"] {
+    object-position: 50% 20%;
 }
 
 .about-gallery-nav {
@@ -763,6 +820,12 @@ section h2::after {
     justify-content: center; /* center address and phone rows */
 }
 
+@media (min-width: 993px) {
+    .contact .branches {
+        grid-template-columns: repeat(2, minmax(220px, 260px));
+    }
+}
+
 .contact-info i {
     margin-right: 15px;
     color: var(--primary-color);
@@ -774,9 +837,10 @@ section h2::after {
 /* Branch tiles */
 .branches {
     display: grid;
-    grid-template-columns: repeat(3, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 260px));
     gap: 20px;
     align-items: stretch;
+    justify-content: center;
 }
 
 .branch-card {
@@ -920,6 +984,12 @@ section h2::after {
     font-weight: 400;
 }
 
+.footer-social-link:visited,
+.footer-social-link:active,
+.footer-social-link:focus {
+    color: #fff;
+}
+
 .footer-social-link:hover {
     background: var(--primary-color);
     transform: translateY(-2px);
@@ -990,12 +1060,27 @@ section h2::after {
 }
 
 @media (max-width: 768px) {
+    .site-logo {
+        width: 52px;
+        height: 52px;
+    }
+
+    .header-social {
+        gap: 8px;
+        margin-right: 10px;
+    }
+
+    .header-social-link {
+        width: 34px;
+        height: 34px;
+    }
+
     .nav-links {
         position: fixed;
-        top: 80px;
+        top: 64px;
         right: -100%;
         width: 60%;
-        height: calc(100vh - 80px);
+        height: calc(100vh - 64px);
         background: white;
         flex-direction: column;
         align-items: center;
@@ -1010,10 +1095,10 @@ section h2::after {
 
     .nav-overlay {
         position: fixed;
-        top: 80px;
+        top: 64px;
         left: 0;
         width: 40%;
-        height: calc(100vh - 80px);
+        height: calc(100vh - 64px);
         background: transparent;
         display: none;
         z-index: 999;
