@@ -9,6 +9,14 @@
     --transition: all 0.3s ease;
 }
 
+@font-face {
+    font-family: 'Veten';
+    src: url('assets/fonts/Veten.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
 /* (Removed) Section Modal styles */
 
 * {
@@ -32,7 +40,7 @@ html {
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Veten', sans-serif;
     line-height: 1.6;
     color: var(--text-color);
     overflow-x: hidden;
@@ -62,7 +70,7 @@ body {
 .stagger > .reveal { transition-delay: calc(var(--stagger-step, 80ms) * var(--i, 0)); }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Veten', sans-serif;
     font-weight: 700;
     margin-bottom: 1rem;
 }
@@ -871,6 +879,10 @@ section h2::after {
     justify-content: flex-start;
 }
 
+.contact .branch-card p {
+    justify-content: center;
+}
+
 .branch-card i { color: var(--primary-color); }
 
 .branch-card .social-links {
@@ -1075,6 +1087,7 @@ section h2::after {
     .header-social {
         gap: 8px;
         margin-right: 12px;
+        margin-left: auto;
     }
 
     .header-social-link {
@@ -1161,6 +1174,7 @@ section h2::after {
     .contact .branches { width: 100%; }
     .contact .branch-card { width: 100%; }
     .contact-content { justify-items: stretch; }
+    .contact .branch-card p { justify-content: center; }
     
     .hero h1 {
         font-size: 2.5rem;
