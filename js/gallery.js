@@ -28,6 +28,7 @@ export function initAboutGallery() {
   let hasInteracted = false;
   let swipeStartIndex = null;
   let snapTimer = null;
+  let isJumping = false;
 
   function preload(i) {
     if (i < 0 || i >= totalReal) return;
@@ -142,9 +143,11 @@ export function initAboutGallery() {
 
   const scheduleSnap = () => {
     if (!hasInteracted) return;
+    if (isJumping) return;
     if (snapTimer) clearTimeout(snapTimer);
     snapTimer = setTimeout(() => {
       if (!isReady) return;
+      if (isJumping) return;
       const nearest = getNearestIndexFromScroll();
       if (swipeStartIndex === null) {
         if (nearest !== index) {
@@ -205,13 +208,23 @@ export function initAboutGallery() {
             index = 0;
           } else {
             // Jump to last real slide (no animation)
+            isJumping = true;
             track.scrollTo({ left: totalReal * w, behavior: 'auto' });
             index = totalReal - 1;
+            swipeStartIndex = null;
+            requestAnimationFrame(() => {
+              isJumping = false;
+            });
           }
         } else if (raw >= totalAll - 1) {
           // Jump to first real slide (no animation)
+          isJumping = true;
           track.scrollTo({ left: 1 * w, behavior: 'auto' });
           index = 0;
+          swipeStartIndex = null;
+          requestAnimationFrame(() => {
+            isJumping = false;
+          });
         } else {
           const newIndex = Math.max(0, Math.min(totalReal - 1, raw - 1));
           if (newIndex !== index) index = newIndex;

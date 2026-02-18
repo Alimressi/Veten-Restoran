@@ -1060,6 +1060,13 @@ section h2::after {
 }
 
 @media (max-width: 768px) {
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+    }
+
     .site-logo {
         width: 52px;
         height: 52px;
@@ -1067,12 +1074,16 @@ section h2::after {
 
     .header-social {
         gap: 8px;
-        margin-right: 10px;
+        margin-right: 12px;
     }
 
     .header-social-link {
         width: 34px;
         height: 34px;
+    }
+
+    .burger {
+        margin-left: 2px;
     }
 
     .nav-links {
@@ -1083,10 +1094,33 @@ section h2::after {
         height: calc(100vh - 64px);
         background: white;
         flex-direction: column;
-        align-items: center;
+        align-items: stretch;
         justify-content: center;
         transition: var(--transition);
         box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+        padding: 18px 14px;
+    }
+
+    .nav-links li {
+        width: 100%;
+    }
+
+    .nav-links a {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 12px 14px;
+        border-radius: 10px;
+        background: rgba(244, 244, 244, 0.9);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .nav-links a::after {
+        display: none;
+    }
+
+    .nav-links a.active {
+        background: rgba(244, 244, 244, 1);
     }
     
     .nav-links.active {
@@ -1123,6 +1157,10 @@ section h2::after {
         box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     }
     .nav-links .nav-lang .lang-btn { padding: 10px 12px; min-height: 44px; }
+
+    .contact .branches { width: 100%; }
+    .contact .branch-card { width: 100%; }
+    .contact-content { justify-items: stretch; }
     
     .hero h1 {
         font-size: 2.5rem;
