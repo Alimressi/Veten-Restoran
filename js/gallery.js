@@ -26,6 +26,8 @@ export function initAboutGallery() {
   let index = 0;
   let isReady = false;
   let hasInteracted = false;
+  let swipeStartIndex = null;
+  let snapTimer = null;
 
   function preload(i) {
     if (i < 0 || i >= totalReal) return;
@@ -130,6 +132,61 @@ export function initAboutGallery() {
   prevBtn && prevBtn.addEventListener('click', markInteracted);
   nextBtn && nextBtn.addEventListener('click', markInteracted);
 
+  const getNearestIndexFromScroll = () => {
+    const w = track.clientWidth || 1;
+    const raw = Math.round(track.scrollLeft / w);
+    if (raw <= 0) return totalReal - 1;
+    if (raw >= totalAll - 1) return 0;
+    return Math.max(0, Math.min(totalReal - 1, raw - 1));
+  };
+
+  const scheduleSnap = () => {
+    if (!hasInteracted) return;
+    if (snapTimer) clearTimeout(snapTimer);
+    snapTimer = setTimeout(() => {
+      if (!isReady) return;
+      const nearest = getNearestIndexFromScroll();
+      if (swipeStartIndex === null) {
+        if (nearest !== index) {
+          index = nearest;
+          update({ scroll: true, behavior: 'smooth' });
+        }
+        return;
+      }
+
+      const clamped = Math.max(
+        0,
+        Math.min(totalReal - 1, Math.max(swipeStartIndex - 1, Math.min(swipeStartIndex + 1, nearest)))
+      );
+
+      if (clamped !== index) index = clamped;
+      update({ scroll: true, behavior: 'smooth' });
+      swipeStartIndex = null;
+    }, 120);
+  };
+
+  gallery.addEventListener(
+    'pointerdown',
+    () => {
+      swipeStartIndex = index;
+    },
+    { passive: true }
+  );
+  gallery.addEventListener(
+    'pointerup',
+    () => {
+      scheduleSnap();
+    },
+    { passive: true }
+  );
+  gallery.addEventListener(
+    'touchend',
+    () => {
+      scheduleSnap();
+    },
+    { passive: true }
+  );
+
   let scrollRaf = null;
   track.addEventListener(
     'scroll',
@@ -167,6 +224,8 @@ export function initAboutGallery() {
         }
         preloadNeighbors();
       });
+
+      scheduleSnap();
     },
     { passive: true }
   );
