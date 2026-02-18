@@ -163,7 +163,7 @@ section h2::after {
     display: grid;
     grid-template-columns: auto 1fr auto auto auto;
     align-items: center;
-    padding: 12px 5%;
+    padding: 6px 5%;
 }
 
 /* (Removed) Mega Menu styles */
@@ -176,8 +176,8 @@ section h2::after {
 }
 
 .site-logo {
-    width: 58px;
-    height: 58px;
+    width: 116px;
+    height: 116px;
     object-fit: contain;
     flex: 0 0 auto;
 }
@@ -585,7 +585,7 @@ section h2::after {
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 999;
+    z-index: 2001;
     padding: 0 0 0 0;
     overflow-x: hidden;
     overscroll-behavior: contain;
@@ -694,10 +694,20 @@ section h2::after {
     text-align: left;
 }
 
+.reservation-field input[type="date"] {
+    padding-top: 0;
+    padding-bottom: 0;
+    line-height: 48px;
+}
+
 .reservation-field input,
 .reservation-field select {
     min-height: 48px;
     line-height: 1.2;
+}
+
+.reservation-field input[type="date"] {
+    line-height: 48px;
 }
 
 .reservation-field select {
@@ -964,7 +974,7 @@ section h2::after {
     font-family: 'Playfair Display', serif;
     font-size: 2rem;
     font-weight: 700;
-    color: var(--primary-color);
+    color: #7a5f3f;
     margin-bottom: 20px;
 }
 
@@ -1080,8 +1090,8 @@ section h2::after {
     }
 
     .site-logo {
-        width: 52px;
-        height: 52px;
+        width: 84px;
+        height: 84px;
     }
 
     .header-social {

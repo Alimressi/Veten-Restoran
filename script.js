@@ -52,7 +52,7 @@
     nav_menu: 'Menyu',
     nav_gallery: 'Qalereya',
     nav_contacts: 'Əlaqə',
-    hero_title: 'Vətən Restorana xoş gəlmisiniz',
+    hero_title: 'Vətən Restoran',
     hero_subtitle: 'Əsl Azərbaycan mətbəxi və isti qonaqpərvərlik',
     about_title: 'Restoran haqqında',
     about_p1: '“Vətən” restoranı — əsl Azərbaycan mətbəxi ilə ailəvi məkan. Burada ənənəvi reseptlər mədəniyyətə hörmət və qayğı ilə hazırlanır, yeməklər isə yalnız təzə yerli məhsullardan yaradılır. Menyumuzda geniş seçim var: şirəli kabablar, ətirli plov, zərif dolma, ev şirniyyatları və daha bir çox dadlar — hər zövqə uyğun təam tapmaq mümkündür.',

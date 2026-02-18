@@ -163,8 +163,6 @@ export async function onRequest(context) {
     `<b>⏰ Saat:</b> ${escapeHtml(time)}`,
     `<b>👥 Adam sayı:</b> ${escapeHtml(guests)}`,
     `<b>📞 Telefon:</b> <code>${escapeHtml(phone)}</code>${safeMessage}`,
-    '',
-    `#${branch.replace(/\s+/g, '')} ${date}`,
   ].join('\n');
 
   const telegramRes = await fetch(

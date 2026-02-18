@@ -155,6 +155,12 @@ export function initReservation() {
     setNotice(null, '');
   }
 
+  const headerLogo = document.querySelector('.logo');
+  headerLogo && headerLogo.addEventListener('click', () => {
+    closeModal();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
   function buildTimeOptions() {
     if (!timeSelect) return;
     timeSelect.innerHTML = '';
