@@ -390,10 +390,10 @@ section h2::after {
 .about-gallery-track img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
     flex: 0 0 100%;
     scroll-snap-align: start;
-    display: block;
+    object-fit: cover;
+    border-radius: 14px;
     background: #f2f2f2;
 }
 
@@ -1175,6 +1175,16 @@ section h2::after {
 
     .desktop-only { display: none; }
     .mobile-only { display: flex; }
+
+    .about-gallery-track img[src*="/int2.jpg"],
+    .about-gallery-track img[src$="int2.jpg"] {
+        object-position: 50% 44%;
+    }
+
+    .about-gallery-track img[src*="/int3.jpg"],
+    .about-gallery-track img[src$="int3.jpg"] {
+        object-position: 50% 20%;
+    }
 
     .nav-links .nav-lang { margin-top: 18px; }
     .nav-links .nav-lang .lang-switch {

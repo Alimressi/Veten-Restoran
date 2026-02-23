@@ -125,6 +125,20 @@ export function initReservation() {
     modal.setAttribute('aria-hidden', 'false');
     setBodyLocked(true);
     setNotice(null, '');
+    if (modalContent) {
+      try {
+        modalContent.scrollTo({ top: 0, behavior: 'auto' });
+      } catch (_) {
+        modalContent.scrollTop = 0;
+      }
+      requestAnimationFrame(() => {
+        try {
+          modalContent.scrollTo({ top: 0, behavior: 'auto' });
+        } catch (_) {
+          modalContent.scrollTop = 0;
+        }
+      });
+    }
     if (phoneInput) setTimeout(() => phoneInput.focus(), 50);
   }
 
