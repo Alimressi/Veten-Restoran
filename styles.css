@@ -313,6 +313,13 @@ section h2::after {
     padding: 0 20px;
 }
 
+@media (min-width: 769px) {
+    .hero {
+        align-items: flex-start;
+        padding-top: 270px;
+    }
+}
+
 .hero-content {
     max-width: 800px;
     margin: 0 auto;
@@ -400,6 +407,18 @@ section h2::after {
 .about-gallery-track img[src*="/int2.jpg"],
 .about-gallery-track img[src$="int2.jpg"] {
     object-position: 50% 20%;
+}
+
+@media (min-width: 769px) {
+    .about-gallery-track img[src*="/int2.jpg"],
+    .about-gallery-track img[src$="int2.jpg"] {
+        object-position: 50% 38%;
+    }
+
+    .about-gallery-track img[src*="/int3.jpg"],
+    .about-gallery-track img[src$="int3.jpg"] {
+        object-position: 50% 20%;
+    }
 }
 
 .about-gallery-nav {
