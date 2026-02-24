@@ -315,8 +315,9 @@ section h2::after {
 
 @media (min-width: 769px) {
     .hero {
-        align-items: flex-start;
-        padding-top: 270px;
+        box-sizing: border-box;
+        padding-top: 140px;
+        padding-bottom: 40px;
     }
 }
 
