@@ -319,6 +319,11 @@ section h2::after {
         padding-top: 140px;
         padding-bottom: 40px;
     }
+
+    .hero p {
+        font-size: 1.8rem;
+        line-height: 1.55;
+    }
 }
 
 .hero-content {
@@ -333,7 +338,7 @@ section h2::after {
 }
 
 .hero p {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     margin-bottom: 30px;
     animation: fadeInUp 1s ease 0.3s;
     animation-fill-mode: both;

@@ -9,10 +9,14 @@
     nav_menu: 'Меню',
     nav_gallery: 'Галерея',
     nav_contacts: 'Контакты',
-    hero_title: 'Добро пожаловать в Vətən Restoran',
-    hero_subtitle: 'Настоящая азербайджанская кухня и тёплое гостеприимство',
+    hero_title: 'Veten',
+    hero_subtitle:
+      '«Vətən» — место, где глубина и тонкость азербайджанской кухни раскрываются на новом уровне. Здесь традиции не просто сохраняются — они переосмысляются со вкусом и подаются в современном прочтении.\n\n' +
+      'Основа нашей кухни — отборные местные продукты, точность и высокая культура вкуса. Каждая подача продумана, каждая деталь имеет цель — ничего случайного.\n\n' +
+      'Атмосфера пространства — гармония спокойной элегантности и уюта. Интерьер, музыка и сервис создают единое ощущение — здесь всё выстроено тонко.\n\n' +
+      '«Vətən» — не просто ресторан. Это избранный опыт вкуса, эстетики и культуры.',
     about_title: 'О ресторане',
-    about_p1: 'Ресторан «Vətən» — семейное заведение с настоящей азербайджанской кухней. Здесь традиционные рецепты готовятся с заботой и уважением к культуре, а блюда создаются только из свежих местных продуктов. В нашем меню — большой выбор блюд: от сочных шашлыков и ароматного плова до нежной долмы и домашних сладостей — и многое другое, чтобы каждый гость нашёл вкус по душе.',
+    about_p1: 'Ресторан «Vətən» — семейное заведение с настоящей азербайджанской кухней. Здесь традиционные рецепты готовятся с заботой и уважением к культуре, а блюда создаются только из свежих местных продуктов. В меню — сочные шашлыки, ароматный плов, нежная долма и домашние сладости, которые передают вкус Азербайджана в каждой ложке.',
     about_p2: 'Интерьер ресторана тёплый и уютный, создающий атмосферу настоящего дома. Дружелюбное обслуживание и внимание к деталям делают каждый визит особенным, а время, проведённое здесь, запоминается своей комфортной и душевной атмосферой.',
     menu_title: 'Наше меню',
     branch_suffix: 'филиал',
@@ -52,8 +56,12 @@
     nav_menu: 'Menyu',
     nav_gallery: 'Qalereya',
     nav_contacts: 'Əlaqə',
-    hero_title: 'Vətən Restoran',
-    hero_subtitle: 'Əsl Azərbaycan mətbəxi və isti qonaqpərvərlik',
+    hero_title: 'Veten',
+    hero_subtitle:
+      '“Vətən” — Azərbaycan mətbəxinin dərinliyini və incəliyini yeni səviyyədə təqdim edən məkandır. Burada ənənə sadəcə qorunmur — o, zövqlə yenidən düşünülür və müasir baxışla təqdim olunur.\n\n' +
+      'Mətbəximizin əsasını seçilmiş yerli məhsullar, dəqiqlik və yüksək dad mədəniyyəti təşkil edir. Hər təqdimat düşünülmüşdür, hər detal məqsədyönlüdür — təsadüfi heç nə yoxdur.\n\n' +
+      'Məkanın atmosferi sakit dəbdəbə və rahatlığın harmoniyasıdır. İnteryer, musiqi və servis vahid bir hiss yaradır — burada hər şey incəliklə qurulub.\n\n' +
+      '“Vətən” — sadəcə restoran deyil. Bu, dad, estetika və mədəniyyətin seçilmiş təcrübəsidir.',
     about_title: 'Restoran haqqında',
     about_p1: '“Vətən” restoranı — əsl Azərbaycan mətbəxi ilə ailəvi məkan. Burada ənənəvi reseptlər mədəniyyətə hörmət və qayğı ilə hazırlanır, yeməklər isə yalnız təzə yerli məhsullardan yaradılır. Menyumuzda geniş seçim var: şirəli kabablar, ətirli plov, zərif dolma, ev şirniyyatları və daha bir çox dadlar — hər zövqə uyğun təam tapmaq mümkündür.',
     about_p2: 'Restoranın interyeri isti və rahatdır, elə bil doğma ev mühitini yaradır. Səmimi xidmət və detallara diqqət hər gəlişi özəl edir, burada keçirilən vaxt isə rahatlığı və ürəkliliyi ilə yadda qalır.',
@@ -95,8 +103,12 @@
     nav_menu: 'Menu',
     nav_gallery: 'Gallery',
     nav_contacts: 'Contacts',
-    hero_title: 'Welcome to Veten Restaurant',
-    hero_subtitle: 'Genuine Azerbaijani cuisine and warm hospitality',
+    hero_title: 'Veten',
+    hero_subtitle:
+      '“Vətən” is a place where the depth and refinement of Azerbaijani cuisine are presented on a new level. Here, tradition is not merely preserved — it is thoughtfully reimagined and served with a modern perspective.\n\n' +
+      'Our cuisine is built on carefully selected local ingredients, precision, and a strong culture of taste. Every presentation is considered, every detail has a purpose — nothing is accidental.\n\n' +
+      'The atmosphere is a harmony of quiet elegance and comfort. The interior, music, and service create a unified feeling — everything here is crafted with finesse.\n\n' +
+      '“Vətən” is not just a restaurant. It is a curated experience of taste, aesthetics, and culture.',
     about_title: 'About us',
     about_p1: 'Vətən Restaurant is a family venue with genuine Azerbaijani cuisine. Here, traditional recipes are prepared with care and respect for culture, and dishes are created only from fresh local ingredients. Our menu offers a wide variety of options — from juicy kebabs and fragrant pilaf to delicate dolma and homemade sweets — plus many more dishes, so everyone can find something they love.',
     about_p2: 'The interior is warm and cozy, creating the atmosphere of a real home. Friendly service and attention to detail make every visit special, and the time spent here is remembered for its comfort and heartfelt ambiance.',
