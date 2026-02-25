@@ -6,7 +6,7 @@ export const i18n = {
     nav_menu: 'Меню',
     nav_gallery: 'Галерея',
     nav_contacts: 'Контакты',
-    hero_title: 'Veten',
+    hero_title: 'Vətən',
     hero_subtitle: 'Настоящая азербайджанская кухня и тёплое гостеприимство',
     about_title: 'О ресторане',
     about_p1:
@@ -52,7 +52,7 @@ export const i18n = {
     nav_menu: 'Menyu',
     nav_gallery: 'Qalereya',
     nav_contacts: 'Əlaqə',
-    hero_title: 'Veten',
+    hero_title: 'Vətən',
     hero_subtitle: 'Əsl Azərbaycan mətbəxi və isti qonaqpərvərlik',
     about_title: 'Restoran haqqında',
     about_p1:
@@ -98,7 +98,7 @@ export const i18n = {
     nav_menu: 'Menu',
     nav_gallery: 'Gallery',
     nav_contacts: 'Contacts',
-    hero_title: 'Veten',
+    hero_title: 'Vətən',
     hero_subtitle: 'Genuine Azerbaijani cuisine and warm hospitality',
     about_title: 'About us',
     about_p1:

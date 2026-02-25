@@ -9,7 +9,7 @@
     nav_menu: 'Меню',
     nav_gallery: 'Галерея',
     nav_contacts: 'Контакты',
-    hero_title: 'Veten',
+    hero_title: 'Vətən',
     hero_subtitle:
       '«Vətən» — место, где глубина и тонкость азербайджанской кухни раскрываются на новом уровне. Здесь традиции не просто сохраняются — они переосмысляются со вкусом и подаются в современном прочтении.\n\n' +
       'Основа нашей кухни — отборные местные продукты, точность и высокая культура вкуса. Каждая подача продумана, каждая деталь имеет цель — ничего случайного.\n\n' +
@@ -56,7 +56,7 @@
     nav_menu: 'Menyu',
     nav_gallery: 'Qalereya',
     nav_contacts: 'Əlaqə',
-    hero_title: 'Veten',
+    hero_title: 'Vətən',
     hero_subtitle:
       '“Vətən” — Azərbaycan mətbəxinin dərinliyini və incəliyini yeni səviyyədə təqdim edən məkandır. Burada ənənə sadəcə qorunmur — o, zövqlə yenidən düşünülür və müasir baxışla təqdim olunur.\n\n' +
       'Mətbəximizin əsasını seçilmiş yerli məhsullar, dəqiqlik və yüksək dad mədəniyyəti təşkil edir. Hər təqdimat düşünülmüşdür, hər detal məqsədyönlüdür — təsadüfi heç nə yoxdur.\n\n' +
@@ -103,7 +103,7 @@
     nav_menu: 'Menu',
     nav_gallery: 'Gallery',
     nav_contacts: 'Contacts',
-    hero_title: 'Veten',
+    hero_title: 'Vətən',
     hero_subtitle:
       '“Vətən” is a place where the depth and refinement of Azerbaijani cuisine are presented on a new level. Here, tradition is not merely preserved — it is thoughtfully reimagined and served with a modern perspective.\n\n' +
       'Our cuisine is built on carefully selected local ingredients, precision, and a strong culture of taste. Every presentation is considered, every detail has a purpose — nothing is accidental.\n\n' +
